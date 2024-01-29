@@ -125,7 +125,8 @@ int main()
     };
 
     Texture earth("res/textures/earth.png");
-    std::vector<Texture> textures = { earth };
+    std::vector<Texture> textures;
+    textures.push_back(earth);
 
     calculateSphereTexCoords(vertices);
 
