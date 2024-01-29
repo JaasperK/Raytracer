@@ -139,9 +139,6 @@ int main()
     prog.Activate();
     prog.Uniform1f("u_AmbLight", 0.1f);
 
-    textures[0].Bind(1);
-    prog.Uniform1i("jasper", 1);
-
     Camera cam(WINDOW_WIDTH, WINDOW_HEIGHT, glm::vec3(0.0f, 0.0f, 5.0f));
 
     // Init rotation params
