@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>src\Framework;src\vendor;$(SolutionDir)Dependencies\GLFW\include;%(AdditionalIncludeDirectories);$(SolutionDir)Dependencies\GLEW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src\Framework\GLAPI;src\Framework;src\vendor;$(SolutionDir)Dependencies\GLFW\include;%(AdditionalIncludeDirectories);$(SolutionDir)Dependencies\GLEW\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -93,7 +93,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>src\Framework;src\vendor;$(SolutionDir)Dependencies\GLFW\include;%(AdditionalIncludeDirectories);$(SolutionDir)Dependencies\GLEW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src\Framework\GLAPI;src\Framework;src\vendor;$(SolutionDir)Dependencies\GLFW\include;%(AdditionalIncludeDirectories);$(SolutionDir)Dependencies\GLEW\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,15 +139,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Framework\Camera.cpp" />
+    <ClCompile Include="src\Framework\Mesh.cpp" />
+    <ClCompile Include="src\Framework\Ray.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Framework\Debug.cpp" />
-    <ClCompile Include="src\Framework\IndexBuffer.cpp" />
-    <ClCompile Include="src\Framework\Shader.cpp" />
-    <ClCompile Include="src\Framework\Texture.cpp" />
+    <ClCompile Include="src\Framework\GLAPI\IndexBuffer.cpp" />
+    <ClCompile Include="src\Framework\GLAPI\Shader.cpp" />
+    <ClCompile Include="src\Framework\GLAPI\Texture.cpp" />
     <ClCompile Include="src\vendor\glm\detail\glm.cpp" />
     <ClCompile Include="src\vendor\stb_image\stb_image.cpp" />
-    <ClCompile Include="src\Framework\VertexArray.cpp" />
-    <ClCompile Include="src\Framework\VertexBuffer.cpp" />
+    <ClCompile Include="src\Framework\GLAPI\VertexArray.cpp" />
+    <ClCompile Include="src\Framework\GLAPI\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\shaders\vertexshader.vert" />
@@ -292,11 +295,14 @@
     <None Include="src\vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Framework\BufferLayout.h" />
+    <ClInclude Include="src\Framework\GLAPI\BufferLayout.h" />
+    <ClInclude Include="src\Framework\Camera.h" />
     <ClInclude Include="src\Framework\Debug.h" />
-    <ClInclude Include="src\Framework\IndexBuffer.h" />
-    <ClInclude Include="src\Framework\Shader.h" />
-    <ClInclude Include="src\Framework\Texture.h" />
+    <ClInclude Include="src\Framework\GLAPI\IndexBuffer.h" />
+    <ClInclude Include="src\Framework\Mesh.h" />
+    <ClInclude Include="src\Framework\Ray.h" />
+    <ClInclude Include="src\Framework\GLAPI\Shader.h" />
+    <ClInclude Include="src\Framework\GLAPI\Texture.h" />
     <ClInclude Include="src\vendor\glm\common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_vector_relational.hpp" />
@@ -580,12 +586,12 @@
     <ClInclude Include="src\vendor\glm\vec4.hpp" />
     <ClInclude Include="src\vendor\glm\vector_relational.hpp" />
     <ClInclude Include="src\vendor\stb_image\stb_image.h" />
-    <ClInclude Include="src\Framework\VertexArray.h" />
-    <ClInclude Include="src\Framework\VertexBuffer.h" />
+    <ClInclude Include="src\Framework\GLAPI\VertexArray.h" />
+    <ClInclude Include="src\Framework\GLAPI\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\images\earth.png" />
-    <Image Include="res\images\stones.png" />
+    <Image Include="res\textures\earth.png" />
+    <Image Include="res\textures\stones.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

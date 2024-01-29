@@ -1,5 +1,5 @@
-#ifndef _SHADER_H_
-#define _SHADER_H_
+#ifndef SHADER_H
+#define SHADER_H
 
 
 #include <iostream>
@@ -8,10 +8,8 @@
 #include <string>
 #include <array>
 
-#include <glm/glm.hpp>
-
 #include <GL/glew.h>
-
+#include <glm/glm.hpp>
 
 struct ShaderProgramSource
 {
@@ -42,4 +40,4 @@ private:
 	GLuint m_progID;
 };
 
-#endif // !_SHADER_H_
+#endif // !SHADER_H

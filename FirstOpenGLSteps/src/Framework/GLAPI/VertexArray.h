@@ -1,5 +1,5 @@
-#ifndef _VERTEXARRAY_H_
-#define _VERTEXARRAY_H_
+#ifndef VERTEXARRAY_H
+#define VERTEXARRAY_H
 
 
 #include <GL/glew.h>
@@ -22,4 +22,4 @@ private:
 	unsigned int m_ID;
 };
 
-#endif // !_VERTEXARRAY_H_
+#endif // !VERTEXARRAY_H

@@ -1,10 +1,19 @@
 #include <Debug.h>
 
-void GLAPIENTRY Debug::debugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
-  std::cout << "OpenGL Debug message: " << message << std::endl;
+double Debug::CalculateFrameRate(double lastTime, int& numFrames)
+{
+  double currentTime = glfwGetTime();
+  numFrames += 1;
+  if ((currentTime - lastTime) >= 1.0)
+  {
+    std::cout << "FPS: " << numFrames << std::endl;
+    numFrames = 0;
+    return currentTime;
+  }
+  return lastTime;
 }
 
-void Debug::printVertices(GLfloat* arr, int size)
+void Debug::PrintVertices(GLfloat* arr, int size)
 {
   std::cout << "[";
 
@@ -20,15 +29,19 @@ void Debug::printVertices(GLfloat* arr, int size)
   std::cout << "\n]" << std::endl;
 }
 
-void Debug::print_vec3(glm::vec3 v)
+void Debug::PrintVec3(glm::vec3 v)
 {
   std::cout << "(x, y, z) = (" << v.x << ", " << v.y << ", " << v.z << ")" << std::endl;
 }
 
-void Debug::printNormals(std::vector<GLfloat> normals)
+void Debug::PrintNormals(std::vector<GLfloat> normals)
 {
   for (size_t i = 0; i < normals.size(); i += 3)
   {
     std::cout << "n" << i / 3 << " = " << normals[i] << ", " << normals[i + 1] << ", " << normals[i + 2] << std::endl;
   }
+}
+
+void GLAPIENTRY Debug::DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
+  std::cout << "OpenGL Debug message: " << message << std::endl;
 }

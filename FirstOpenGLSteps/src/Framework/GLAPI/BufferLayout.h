@@ -1,5 +1,5 @@
-#ifndef _BUFFERLAYOUT_H_
-#define _BUFFERLAYOUT_H_
+#ifndef BUFFERLAYOUT_H
+#define BUFFERLAYOUT_H
 
 
 #include <GL/glew.h>
@@ -32,17 +32,14 @@ struct VertexBufferElement
 };
 
 
-
 class BufferLayout
 {
 public:
 	BufferLayout() : m_Stride(0) {}
 	~BufferLayout() {}
 
-
 	inline unsigned int GetStride() const { return m_Stride; }
 	inline std::vector<VertexBufferElement> GetElements() const { return m_Elements; }
-
 
 	template<typename T>
 	void Push(unsigned int count, GLboolean normalized)
@@ -75,4 +72,4 @@ private:
 	unsigned int m_Stride;
 };
 
-#endif // !_BUFFERLAYOUT_H_
+#endif // !BUFFERLAYOUT_H

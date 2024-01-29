@@ -11,6 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+//Framework includes
 #include <VertexArray.h>
 #include <VertexBuffer.h>
 #include <BufferLayout.h>
@@ -18,9 +19,11 @@
 #include <Shader.h>
 #include <Texture.h>
 #include <Debug.h>
+#include <Camera.h>
 
-
-constexpr auto PI = 3.1415926535897932384626433832795028841971693993751058209749445923f;
+constexpr int WINDOW_WIDTH = 1000;
+constexpr int WINDOW_HEIGHT = 1000;
+constexpr float PI = 3.1415927f;
 static void calculateSphereTexCoords(GLfloat* verts, int size)
 {
   float u = 0;
@@ -52,7 +55,7 @@ int main()
     return -1;
 
   /* Create a windowed mode window and its OpenGL context */
-  window = glfwCreateWindow(1000, 1000, "Hello World", NULL, NULL);
+  window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World", NULL, NULL);
   if (!window)
   {
     glfwTerminate();
@@ -62,6 +65,7 @@ int main()
   /* Make the window's context current */
   glfwMakeContextCurrent(window);
 
+  // vsync; comment or set 0 to disable, set 1 to enable
   glfwSwapInterval(1);
 
   if (glewInit() != GLEW_OK)
@@ -76,7 +80,7 @@ int main()
 
   glEnable(GL_DEBUG_OUTPUT);
   glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-  glDebugMessageCallback(Debug::debugCallback, nullptr);
+  glDebugMessageCallback(Debug::DebugCallback, nullptr);
 
 
   { // Scope to call Vertex- and IndexBuffer destructor before glfwTerminate()
@@ -84,43 +88,39 @@ int main()
 
     // Setup Buffers
     const GLfloat x = 0.52573111212f;
-    const GLfloat z = 0.85065080835f;
+    const GLfloat z = 0.85065080835f;    
 
-    GLfloat positions[] = {
-       -x,  0,  z,
-        x,  0,  z,
-       -x,  0, -z,
-        x,  0, -z,
-        0,  z,  x,
-        0,  z, -x,
-        0, -z,  x,
-        0, -z, -x,
-        z,  x,  0,
-       -z,  x,  0,
-        z, -x,  0,
-       -z, -x,  0,
-    };
-    
-    // TODO: figure out real texture coordinates
     int vertsSize = 12 * 5;
     GLfloat vertices[] = {
-      // Positions | Texture coordinates
-       -x,  0,  z,   1.0f, 1.0f,
-        x,  0,  z,   0.0f, 0.0f,
-       -x,  0, -z,   0.0f, 0.0f,
-        x,  0, -z,   0.0f, 0.0f,
-        0,  z,  x,   0.0f, 0.0f,
-        0,  z, -x,   0.0f, 0.0f,
-        0, -z,  x,   0.0f, 0.0f,
-        0, -z, -x,   0.0f, 0.0f,
-        z,  x,  0,   0.0f, 0.0f,
-       -z,  x,  0,   0.0f, 0.0f,
-        z, -x,  0,   0.0f, 0.0f,
-       -z, -x,  0,   0.0f, 0.0f,
+      //     Positions     | Texture coordinates (calculated later)
+          -x, 0.0f,     z,   0.0f, 0.0f,
+           x, 0.0f,     z,   0.0f, 0.0f,
+          -x, 0.0f,    -z,   0.0f, 0.0f,
+           x, 0.0f,    -z,   0.0f, 0.0f,
+        0.0f,    z,     x,   0.0f, 0.0f,
+        0.0f,    z,    -x,   0.0f, 0.0f,
+        0.0f,   -z,     x,   0.0f, 0.0f,
+        0.0f,   -z,    -x,   0.0f, 0.0f,
+           z,    x,  0.0f,   0.0f, 0.0f,
+          -z,    x,  0.0f,   0.0f, 0.0f,
+           z,   -x,  0.0f,   0.0f, 0.0f,
+          -z,   -x,  0.0f,   0.0f, 0.0f,
     };
 
     calculateSphereTexCoords(vertices, vertsSize);
-    Debug::printVertices(vertices, vertsSize);
+    Debug::PrintVertices(vertices, vertsSize);
+    
+    VertexArray va;
+    va.Bind();
+
+    VertexBuffer vertsBuf(&vertices, sizeof(vertices));
+    vertsBuf.Bind();
+
+    BufferLayout layout;
+    layout.Push<float>(3, GL_FALSE);
+    layout.Push<float>(2, GL_FALSE);
+
+    va.LinkAttrib(vertsBuf, layout);
 
     GLuint indices[] = {
        0,  4,  1,
@@ -144,26 +144,11 @@ int main()
        9,  2,  5,
        7,  2, 11
     };
-    
-    VertexArray va;
-    va.Bind();
-
-    VertexBuffer vertsBuf(&vertices, sizeof(vertices));
-    vertsBuf.Bind();
-
-    BufferLayout layout;
-    layout.Push<float>(3, GL_FALSE);
-    layout.Push<float>(2, GL_FALSE);
-
-    va.LinkAttrib(vertsBuf, layout);
-
-    //va.LinkAttrib(vertsBuf, 0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*) (0 * sizeof(GLfloat))); // Links vao[0] to the buffer, that is currently bound
-    //va.LinkAttrib(vertsBuf, 1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*) (3 * sizeof(GLfloat))); // Links vao[1] to the buffer, that is currently bound
 
     IndexBuffer indBuf(&indices, sizeof(indices));
     indBuf.Bind();
 
-    Texture earth("res/images/earth.png");
+    Texture earth("res/textures/earth.png");
     GLuint texSlot = 0;
     earth.Bind(texSlot);
 
@@ -172,24 +157,31 @@ int main()
     std::string fragmentShader = "res/shaders/fragmentshader.frag";
     Shader prog(vertexShader, fragmentShader);
     prog.Activate();
-    prog.Uniform1f("u_AmbLight", 10.0f);
+    prog.Uniform1f("u_AmbLight", 0.2f);
     prog.Uniform1i("u_Earth", texSlot);
-    prog.UniformMat4f("u_ProjectionMatrix", glm::mat4(1.0f));
-    prog.UniformMat4f("u_ViewMatrix", glm::mat4(1.0f));
+
+    Camera cam(WINDOW_WIDTH, WINDOW_HEIGHT, glm::vec3(0.0f, 0.0f, 5.0f));
 
     // Init rotation params
     float rotAmount = 0.0f;
-    glm::vec3 rotAxis = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 rotAxis = glm::vec3(0.0f, 1.0f, 0.0f);    
     
-    /* Loop until the user closes the window */
+    // To measure FPS 
+    double time = glfwGetTime();
+    int numFrames = 0;
     while (!glfwWindowShouldClose(window))
     {
+      glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+      cam.SetupMatrices(45.0f, 0.1f, 100.0f, prog);
+      cam.Inputs(window);
       rotAmount += 0.02f;
       prog.UniformMat4f("u_ModelMatrix", glm::rotate(glm::mat4(1.0f), rotAmount, rotAxis));
 
-      glDrawElements(GL_TRIANGLES, indBuf.GetCount() , GL_UNSIGNED_INT, 0);
+      glDrawElements(GL_TRIANGLES, indBuf.GetCount(), GL_UNSIGNED_INT, 0);
+
+      time = Debug::CalculateFrameRate(time, numFrames);
 
       glfwSwapBuffers(window);
       glfwPollEvents();

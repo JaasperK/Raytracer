@@ -28,7 +28,7 @@ void Shader::Uniform1i(const std::string& name, int v0) const
 
 void Shader::Uniform1f(const std::string& name, float v0) const
 {
-  glUniform1i(glGetUniformLocation(m_progID, name.c_str()), v0);
+  glUniform1f(glGetUniformLocation(m_progID, name.c_str()), v0);
 }
 
 void Shader::Uniform3f(const std::string& name, float v0, float v1, float v2) const
@@ -43,7 +43,7 @@ void Shader::Uniform4f(const std::string& name, float v0, float v1, float v2, fl
 
 void Shader::UniformMat4f(const std::string& name, const glm::mat4& matrix) const
 {
-  glUniformMatrix4fv(glGetUniformLocation(m_progID, name.c_str()), 1, GL_FALSE, &matrix[0].x);
+  glUniformMatrix4fv(glGetUniformLocation(m_progID, name.c_str()), 1, GL_FALSE, &(matrix[0].x));  // same as glm::value_ptr(matrix)
 }
 
 /////////////////////////

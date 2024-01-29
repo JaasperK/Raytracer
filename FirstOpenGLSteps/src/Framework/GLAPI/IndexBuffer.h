@@ -1,13 +1,15 @@
-#ifndef _INDEXBUFFER_H_
-#define _INDEXBUFFER_H_
+#ifndef INDEXBUFFER_H
+#define INDEXBUFFER_H
 
 
 #include <GL/glew.h>
+#include <vector>
 
 class IndexBuffer
 {
 public:
 	IndexBuffer(const void* data, unsigned int count);
+	IndexBuffer(std::vector<GLuint> &indices);
 	~IndexBuffer();
 
 	void Bind() const;
@@ -16,8 +18,8 @@ public:
 	inline unsigned int GetCount() const { return m_Count; }
 
 private:
-	unsigned int m_ID;
+	GLuint m_ID;
 	unsigned int m_Count;
 };
 
-#endif // !_INDEXBUFFER_H_
+#endif // !INDEXBUFFER_H

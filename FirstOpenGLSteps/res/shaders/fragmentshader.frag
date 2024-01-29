@@ -2,6 +2,7 @@
 
 out vec4 FragColor;
 
+uniform sampler2D u_Texture0;
 uniform sampler2D u_Earth;
 uniform float u_AmbLight;
 

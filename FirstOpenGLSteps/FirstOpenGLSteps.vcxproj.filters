@@ -18,16 +18,16 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Framework\VertexBuffer.cpp">
+    <ClCompile Include="src\Framework\GLAPI\VertexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Framework\IndexBuffer.cpp">
+    <ClCompile Include="src\Framework\GLAPI\IndexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Framework\Shader.cpp">
+    <ClCompile Include="src\Framework\GLAPI\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Framework\VertexArray.cpp">
+    <ClCompile Include="src\Framework\GLAPI\VertexArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\vendor\glm\detail\glm.cpp">
@@ -36,24 +36,33 @@
     <ClCompile Include="src\vendor\stb_image\stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Framework\Texture.cpp">
+    <ClCompile Include="src\Framework\GLAPI\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Framework\Debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Framework\Ray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Framework\VertexBuffer.h">
+    <ClInclude Include="src\Framework\GLAPI\VertexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Framework\IndexBuffer.h">
+    <ClInclude Include="src\Framework\GLAPI\IndexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Framework\Shader.h">
+    <ClInclude Include="src\Framework\GLAPI\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Framework\VertexArray.h">
+    <ClInclude Include="src\Framework\GLAPI\VertexArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\vendor\glm\detail\_features.hpp">
@@ -905,13 +914,22 @@
     <ClInclude Include="src\vendor\stb_image\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Framework\Texture.h">
+    <ClInclude Include="src\Framework\GLAPI\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Framework\Debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Framework\BufferLayout.h">
+    <ClInclude Include="src\Framework\GLAPI\BufferLayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\Ray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1334,10 +1352,10 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\images\stones.png">
+    <Image Include="res\textures\stones.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="res\images\earth.png">
+    <Image Include="res\textures\earth.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
