@@ -30,6 +30,12 @@ public:
 		std::cout << value << std::endl;
 	}
 
+	template<typename T>
+	static void Print(std::string prefix, T value)
+	{
+		std::cout << prefix << value << std::endl;
+	}
+
 private:
 
 };

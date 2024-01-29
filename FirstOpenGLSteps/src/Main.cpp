@@ -12,27 +12,19 @@
 #include <glm/gtc/type_ptr.hpp>
 
 //Framework includes
-#include <VertexArray.h>
-#include <VertexBuffer.h>
-#include <BufferLayout.h>
-#include <IndexBuffer.h>
-#include <Shader.h>
-#include <Texture.h>
 #include <Debug.h>
-#include <Camera.h>
 #include <Mesh.h>
 
 constexpr int WINDOW_WIDTH = 1000;
 constexpr int WINDOW_HEIGHT = 1000;
 constexpr float PI = 3.1415927f;
 
-
 static void calculateSphereTexCoords(std::vector<Vertex> &verts)
 {
   float u = 0;
   float v = 0;
 
-  for (int i = 0; i < verts.size(); i++)
+  for (unsigned int i = 0; i < verts.size(); i++)
   {
     float x = verts[i].position.x;
     float y = verts[i].position.y;
@@ -94,7 +86,7 @@ int main()
     const GLfloat z = 0.85065080835f;    
 
     std::vector<Vertex> vertices = {
-    //                      Positions      |            Normals          |            Colors          | Texture coordinates (calculated later)
+    //                      Positions      |            Normals          |            Colors         | Texture coordinates (calculated later)
        Vertex{ glm::vec3(  -x, 0.0f,    z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
        Vertex{ glm::vec3(   x, 0.0f,    z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
        Vertex{ glm::vec3(  -x, 0.0f,   -z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
@@ -144,7 +136,10 @@ int main()
     std::string fragmentShader = "res/shaders/fragmentshader.frag";
     Shader prog(vertexShader, fragmentShader);
     prog.Activate();
-    prog.Uniform1f("u_AmbLight", 0.2f);
+    prog.Uniform1f("u_AmbLight", 0.1f);
+
+    textures[0].Bind(1);
+    prog.Uniform1i("jasper", 1);
 
     Camera cam(WINDOW_WIDTH, WINDOW_HEIGHT, glm::vec3(0.0f, 0.0f, 5.0f));
 

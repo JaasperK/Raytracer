@@ -21,22 +21,27 @@ void Shader::Activate() const
   glUseProgram(m_progID);
 }
 
-void Shader::Uniform1i(const std::string& name, int v0) const
+void Shader::Uniform1i(const std::string& name, GLint v0) const
 {
   glUniform1i(glGetUniformLocation(m_progID, name.c_str()), v0);
 }
 
-void Shader::Uniform1f(const std::string& name, float v0) const
+void Shader::Uniform1ui(const std::string& name, GLuint v0) const
+{
+  glUniform1ui(glGetUniformLocation(m_progID, name.c_str()), v0);
+}
+
+void Shader::Uniform1f(const std::string& name, GLfloat v0) const
 {
   glUniform1f(glGetUniformLocation(m_progID, name.c_str()), v0);
 }
 
-void Shader::Uniform3f(const std::string& name, float v0, float v1, float v2) const
+void Shader::Uniform3f(const std::string& name, GLfloat v0, GLfloat v1, GLfloat v2) const
 {
   glUniform3f(glGetUniformLocation(m_progID, name.c_str()), v0, v1, v2);
 }
 
-void Shader::Uniform4f(const std::string& name, float v0, float v1, float v2, float v3) const
+void Shader::Uniform4f(const std::string& name, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3) const
 {
   glUniform4f(glGetUniformLocation(m_progID, name.c_str()), v0, v1, v2, v3);
 }

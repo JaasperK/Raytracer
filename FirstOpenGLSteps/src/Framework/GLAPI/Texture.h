@@ -1,11 +1,13 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
+
+#include <iostream>
 #include <string>
-
 #include <GL/glew.h>
-
 #include <stb_image/stb_image.h>
+
+#include <Debug.h>
 
 class Texture
 {
@@ -16,7 +18,7 @@ public:
 	void Bind(GLuint slot) const;
 	void Unbind() const;
 
-	inline int GetWidth(unsigned int slot=0) const { return m_Width; }
+	inline int GetWidth() const { return m_Width; }
 	inline int GetHeight() const { return m_Height; }
 
 private:
