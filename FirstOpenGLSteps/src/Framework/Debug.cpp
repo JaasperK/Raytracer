@@ -34,6 +34,11 @@ void Debug::PrintVec3(glm::vec3 v)
   std::cout << "(x, y, z) = (" << v.x << ", " << v.y << ", " << v.z << ")" << std::endl;
 }
 
+void Debug::PrintUV(glm::vec2 v)
+{
+  std::cout << "(u, v) = (" << v.x << ", " << v.y << ")" << std::endl;
+}
+
 void Debug::PrintNormals(std::vector<GLfloat> normals)
 {
   for (size_t i = 0; i < normals.size(); i += 3)

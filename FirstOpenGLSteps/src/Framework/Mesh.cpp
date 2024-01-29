@@ -2,13 +2,16 @@
 
 
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices, std::vector<Texture> textures)
+Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<GLuint> &indices, std::vector<Texture> &textures)
 	: m_Vertices(vertices), m_Indices(indices), m_Textures(textures)
 {
 	m_VA.Bind();
 
 	VertexBuffer vb(vertices);
 	vb.Bind();
+
+	IndexBuffer ib(indices);
+	ib.Bind();
 
 	BufferLayout layout;          // See VertexBuffer::Vertex
 	layout.Push<float>(3, false); // vertex position
