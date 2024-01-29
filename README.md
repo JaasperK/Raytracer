@@ -1,6 +1,7 @@
 # FirstOpenGLSteps
 
 ## Dependencies
+This raytracer is made using:
 - GLFW
 - GLEW
 
