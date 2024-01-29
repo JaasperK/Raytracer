@@ -1,1 +1,5 @@
 # FirstOpenGLSteps
+
+## Dependencies
+- GLFW
+- GLEW
