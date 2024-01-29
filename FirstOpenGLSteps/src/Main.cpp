@@ -12,35 +12,30 @@
 #include <glm/gtc/type_ptr.hpp>
 
 //Framework includes
-#include <VertexArray.h>
-#include <VertexBuffer.h>
-#include <BufferLayout.h>
-#include <IndexBuffer.h>
-#include <Shader.h>
-#include <Texture.h>
 #include <Debug.h>
-#include <Camera.h>
+#include <Mesh.h>
 
 constexpr int WINDOW_WIDTH = 1000;
 constexpr int WINDOW_HEIGHT = 1000;
 constexpr float PI = 3.1415927f;
-static void calculateSphereTexCoords(GLfloat* verts, int size)
+
+static void calculateSphereTexCoords(std::vector<Vertex> &verts)
 {
   float u = 0;
   float v = 0;
 
-  for (int i = 0; i < size; i += 5)
+  for (unsigned int i = 0; i < verts.size(); i++)
   {
-    float x = verts[i];
-    float y = verts[i + 1];
-    float z = verts[i + 2];
+    float x = verts[i].position.x;
+    float y = verts[i].position.y;
+    float z = verts[i].position.z;
 
     u = 0.5f + std::atan2(-x, -z) / (2.0f * PI);
     //v = 0.5f - std::asin(y) / PI;  // latitudes
     v = 0.5f - 0.5f * y;  // linear mapping
 
-    verts[i + 3] = u;
-    verts[i + 4] = v;
+    verts[i].texUV.x = u;
+    verts[i].texUV.y = v;
 
     std::cout << "u: " << u << ", v: " << v << std::endl;
   }
@@ -90,39 +85,23 @@ int main()
     const GLfloat x = 0.52573111212f;
     const GLfloat z = 0.85065080835f;    
 
-    int vertsSize = 12 * 5;
-    GLfloat vertices[] = {
-      //     Positions     | Texture coordinates (calculated later)
-          -x, 0.0f,     z,   0.0f, 0.0f,
-           x, 0.0f,     z,   0.0f, 0.0f,
-          -x, 0.0f,    -z,   0.0f, 0.0f,
-           x, 0.0f,    -z,   0.0f, 0.0f,
-        0.0f,    z,     x,   0.0f, 0.0f,
-        0.0f,    z,    -x,   0.0f, 0.0f,
-        0.0f,   -z,     x,   0.0f, 0.0f,
-        0.0f,   -z,    -x,   0.0f, 0.0f,
-           z,    x,  0.0f,   0.0f, 0.0f,
-          -z,    x,  0.0f,   0.0f, 0.0f,
-           z,   -x,  0.0f,   0.0f, 0.0f,
-          -z,   -x,  0.0f,   0.0f, 0.0f,
+    std::vector<Vertex> vertices = {
+    //                      Positions      |            Normals          |            Colors         | Texture coordinates (calculated later)
+       Vertex{ glm::vec3(  -x, 0.0f,    z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+       Vertex{ glm::vec3(   x, 0.0f,    z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+       Vertex{ glm::vec3(  -x, 0.0f,   -z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+       Vertex{ glm::vec3(   x, 0.0f,   -z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+       Vertex{ glm::vec3(0.0f,    z,    x), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+       Vertex{ glm::vec3(0.0f,    z,   -x), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+       Vertex{ glm::vec3(0.0f,   -z,    x), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+       Vertex{ glm::vec3(0.0f,   -z,   -x), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+       Vertex{ glm::vec3(   z,    x, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+       Vertex{ glm::vec3(  -z,    x, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+       Vertex{ glm::vec3(   z,   -x, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+       Vertex{ glm::vec3(  -z,   -x, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
     };
 
-    calculateSphereTexCoords(vertices, vertsSize);
-    Debug::PrintVertices(vertices, vertsSize);
-    
-    VertexArray va;
-    va.Bind();
-
-    VertexBuffer vertsBuf(&vertices, sizeof(vertices));
-    vertsBuf.Bind();
-
-    BufferLayout layout;
-    layout.Push<float>(3, GL_FALSE);
-    layout.Push<float>(2, GL_FALSE);
-
-    va.LinkAttrib(vertsBuf, layout);
-
-    GLuint indices[] = {
+    std::vector<GLuint> indices = {
        0,  4,  1,
        0,  9,  4,
        9,  5,  4,
@@ -145,20 +124,20 @@ int main()
        7,  2, 11
     };
 
-    IndexBuffer indBuf(&indices, sizeof(indices));
-    indBuf.Bind();
-
     Texture earth("res/textures/earth.png");
-    GLuint texSlot = 0;
-    earth.Bind(texSlot);
+    std::vector<Texture> textures;
+    textures.push_back(earth);
+
+    calculateSphereTexCoords(vertices);
+
+    Mesh spheroid(vertices, indices, textures);
 
     // Setup shaders
     std::string vertexShader = "res/shaders/vertexshader.vert";
     std::string fragmentShader = "res/shaders/fragmentshader.frag";
     Shader prog(vertexShader, fragmentShader);
     prog.Activate();
-    prog.Uniform1f("u_AmbLight", 0.2f);
-    prog.Uniform1i("u_Earth", texSlot);
+    prog.Uniform1f("u_AmbLight", 0.1f);
 
     Camera cam(WINDOW_WIDTH, WINDOW_HEIGHT, glm::vec3(0.0f, 0.0f, 5.0f));
 
@@ -179,7 +158,7 @@ int main()
       rotAmount += 0.02f;
       prog.UniformMat4f("u_ModelMatrix", glm::rotate(glm::mat4(1.0f), rotAmount, rotAxis));
 
-      glDrawElements(GL_TRIANGLES, indBuf.GetCount(), GL_UNSIGNED_INT, 0);
+      spheroid.Draw(prog, cam);
 
       time = Debug::CalculateFrameRate(time, numFrames);
 

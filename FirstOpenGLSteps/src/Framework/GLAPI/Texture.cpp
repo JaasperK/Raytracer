@@ -20,7 +20,12 @@ Texture::Texture(const std::string& path)
 
 	if (m_LocalBuffer)
 	{
+		//size_t bufferLength = static_cast<size_t>(m_Width) * m_Height * m_BitsPerPixel / 8;
 		stbi_image_free(m_LocalBuffer);
+	}
+	else
+	{
+		std::cerr << "Invalid path: " << path << std::endl;
 	}
 }
 

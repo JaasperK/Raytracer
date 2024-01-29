@@ -21,12 +21,19 @@ public:
 
 	static void PrintVertices(GLfloat* arr, int size);
 	static void PrintVec3(glm::vec3 v);
+	static void PrintUV(glm::vec2 v);
 	static void PrintNormals(std::vector<GLfloat> normals);
 	
 	template<typename T>
 	static void Print(T value)
 	{
 		std::cout << value << std::endl;
+	}
+
+	template<typename T>
+	static void Print(std::string prefix, T value)
+	{
+		std::cout << prefix << value << std::endl;
 	}
 
 private:

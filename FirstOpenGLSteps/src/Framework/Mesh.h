@@ -15,7 +15,7 @@
 class Mesh
 {
 public:
-	Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices, std::vector<Texture> textures);
+	Mesh(std::vector<Vertex> &vertices, std::vector<GLuint> &indices, std::vector<Texture> &textures);
 	~Mesh();
 
 	void Draw(Shader &prog, Camera &cam) const;
