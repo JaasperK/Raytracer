@@ -12,24 +12,24 @@ Dabei haben wir *GLFW* und *GLEW* verwendet.
 ## Setup
 Öffnen Sie die *Solution Properties* und folgen Sie den Anweisungen:
 
-(**C/C++ - General**) Setze *Additional Include Directories*:
+(**C/C++ - General**) Setzen Sie *Additional Include Directories*:
 - src\vendor
 - src\Framework
 - src\Framework\GLAPI
 - $(SolutionDir)Dependencies\GLFW\include
 - $(SolutionDir)Dependencies\GLEW\include
 
-Copy:
+Zum Kopieren:
 `src\Framework\GLAPI;src\Framework;src\vendor;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include`
 
-(**Linker - General**) Setze *Additional Library Directories*:
+(**Linker - General**) Setzen Sie *Additional Library Directories*:
 - $(SolutionDir)Dependencies\GLFW\lib-vc2022
 - $(SolutionDir)Dependencies\GLEW\lib\Release\Win32
 
-Copy:
+Zum Kopieren:
 `$(SolutionDir)Dependencies\GLFW\lib-vc2022;$(SolutionDir)Dependencies\GLEW\lib\Release\Win32`
 
-(**Linker - Input**) Setze *Additional Dependencies*:
+(**Linker - Input**) Setzen Sie *Additional Dependencies*:
 - glfw3.lib
 - opengl32.lib
 - User32.lib
@@ -37,7 +37,7 @@ Copy:
 - Shell32.lib
 - glew32s.lib
 
-Copy:
+Zum Kopieren:
 `glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;glew32s.lib`
 
 
