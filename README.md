@@ -40,4 +40,5 @@ Zum Kopieren:
 Zum Kopieren:
 `glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;glew32s.lib`
 
-
+## Ausführung
+Über Visual Studio (F5).
