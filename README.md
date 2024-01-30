@@ -1,17 +1,21 @@
-# FirstOpenGLSteps
+# Raytracer
 
 ## Dependencies
 This raytracer is made using:
 - GLFW
 - GLEW
 
-(C/C++ - Tab) Set additional include directories:
+(C/C++ - General) Set additional include directories:
 - src\vendor
 - src\Framework
 - src\Framework\GLAPI
 - $(SolutionDir)Dependencies\GLFW\include
 - $(SolutionDir)Dependencies\GLEW\include
 
-(Linker - Tab) Set additional library directories:
+(Linker - General) Set Additional Library Directories:
 - $(SolutionDir)Dependencies\GLFW\lib-vc2022
-- $(SolutionDir)Dependencies\GLFW\lib\Realease\Win32
+- $(SolutionDir)Dependencies\GLEW\lib\Release\Win32
+
+(Linker - Input) Additional Dependencies
+
+glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;glew32s.lib
