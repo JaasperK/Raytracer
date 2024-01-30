@@ -2,7 +2,7 @@
 #define VERTEXBUFFER_H
 
 
-#include <GL/glew.h>
+#include <GLEW/glew.h>
 #include <glm/glm.hpp>
 #include <vector>
 

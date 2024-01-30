@@ -2,7 +2,7 @@
 #define BUFFERLAYOUT_H
 
 
-#include <GL/glew.h>
+#include <GLEW/glew.h>
 #include <vector>
 #include <iostream>
 

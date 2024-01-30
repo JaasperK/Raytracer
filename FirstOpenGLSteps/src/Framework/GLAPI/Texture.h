@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <string>
-#include <GL/glew.h>
+#include <GLEW/glew.h>
 #include <stb_image/stb_image.h>
 
 #include <Debug.h>

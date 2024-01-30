@@ -8,7 +8,7 @@
 #include <string>
 #include <array>
 
-#include <GL/glew.h>
+#include <GLEW/glew.h>
 #include <glm/glm.hpp>
 
 struct ShaderProgramSource

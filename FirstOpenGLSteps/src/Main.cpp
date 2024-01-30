@@ -1,7 +1,7 @@
 #pragma comment(linker, "/NODEFAULTLIB:MSVCRT")
 #pragma comment(linker, "/NODEFAULTLIB:LIBCMT")
 
-#include <GL/glew.h>
+#include <GLEW/glew.h>
 #include <GLFW/glfw3.h>
 
 #include <vector>

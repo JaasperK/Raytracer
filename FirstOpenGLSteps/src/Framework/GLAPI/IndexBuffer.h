@@ -2,7 +2,7 @@
 #define INDEXBUFFER_H
 
 
-#include <GL/glew.h>
+#include <GLEW/glew.h>
 #include <vector>
 
 class IndexBuffer
