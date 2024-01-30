@@ -19,14 +19,14 @@ Dabei haben wir *GLFW* und *GLEW* verwendet. Die benötigten Datein sind im *Dep
 - $(SolutionDir)Dependencies\GLFW\include
 - $(SolutionDir)Dependencies\GLEW\include
 
-Zum Kopieren:
+Zum Kopieren: <br>
 `src\Framework\GLAPI;src\Framework;src\vendor;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include`
 
 (**Linker - General**) Setzen Sie *Additional Library Directories*:
 - $(SolutionDir)Dependencies\GLFW\lib-vc2022
 - $(SolutionDir)Dependencies\GLEW\lib\Release\Win32
 
-Zum Kopieren:
+Zum Kopieren: <br>
 `$(SolutionDir)Dependencies\GLFW\lib-vc2022;$(SolutionDir)Dependencies\GLEW\lib\Release\Win32`
 
 (**Linker - Input**) Setzen Sie *Additional Dependencies*:
@@ -37,7 +37,7 @@ Zum Kopieren:
 - Shell32.lib
 - glew32s.lib
 
-Zum Kopieren:
+Zum Kopieren: <br>
 `glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;glew32s.lib`
 
 ## Ausführung
