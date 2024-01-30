@@ -5,7 +5,7 @@ This raytracer is made using:
 - GLFW
 - GLEW
 
-Open the properties window and follow the instructions:
+Open the solution properties and follow the instructions:
 
 (C/C++ - General) Set additional include directories:
 - src\vendor
