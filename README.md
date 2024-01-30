@@ -1,8 +1,8 @@
 # Raytracer
 
-## Gruppe 
-Jasper Lennart Köhn (623385)
-Max Thomas Reinstadler (622083)
+## Gruppenmitglieder
+Jasper Lennart Köhn (623385) <br>
+Max Thomas Reinstadler (622083) <br>
 Senol Schulz (624986)
 
 ## Dependencies
