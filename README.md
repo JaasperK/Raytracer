@@ -1,9 +1,11 @@
 # Raytracer
 
-## Dependencies
+## Setup
 This raytracer is made using:
 - GLFW
 - GLEW
+
+Open the properties window and follow the instructions:
 
 (C/C++ - General) Set additional include directories:
 - src\vendor
