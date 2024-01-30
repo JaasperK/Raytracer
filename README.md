@@ -7,7 +7,7 @@ This raytracer is made using:
 
 Open the solution properties and follow the instructions:
 
-(C/C++ - General) Set additional include directories:
+(C/C++ - General) Set Additional Include Directories:
 - src\vendor
 - src\Framework
 - src\Framework\GLAPI
@@ -24,7 +24,7 @@ Copy:
 Copy:
 `$(SolutionDir)Dependencies\GLFW\lib-vc2022;$(SolutionDir)Dependencies\GLEW\lib\Release\Win32`
 
-(Linker - Input) Additional Dependencies
+(Linker - Input) Additional Dependencies:
 - glfw3.lib
 - opengl32.lib
 - User32.lib
