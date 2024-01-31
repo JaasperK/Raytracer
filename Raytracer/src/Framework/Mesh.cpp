@@ -35,7 +35,7 @@ void Mesh::Draw(Shader &prog, Camera &cam) const
 	for (unsigned int i = 0; i < m_Textures.size(); i++)
 	{
 		m_Textures[i].Bind(i);
-		prog.Uniform1i(("u_Texture" + std::to_string(i)).c_str(), i);  // use sampler2D u_Texture0, u_Texture1,..., u_Texturei in frag shader
+		prog.Uniform1i("u_Texture" + std::to_string(i), i);  // use sampler2D u_Texture0, u_Texture1,..., u_Texturei in frag shader
 	}
 
 	glm::vec3 camPos = cam.GetPosition();
