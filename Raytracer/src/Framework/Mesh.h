@@ -14,7 +14,8 @@
 class Mesh
 {
 public:
-	Mesh(std::vector<Vertex> &vertices, std::vector<GLuint> &indices, std::vector<Texture> &textures);
+	Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures);
+	Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures, bool isLightSource);
 	~Mesh();
 
 	void Draw(Shader &prog, Camera &cam) const;
@@ -25,6 +26,7 @@ private:
 	std::vector<Texture> m_Textures;
 
 	VertexArray m_VA;
+	bool m_IsLightSource;
 };
 
 #endif // !MESH_H

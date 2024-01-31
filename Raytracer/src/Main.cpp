@@ -132,6 +132,14 @@ int main()
 
     Mesh spheroid(vertices, indices, textures);
 
+    std::vector<Vertex> vertices2;
+    for (auto& vert : vertices)
+    {
+      vert.position += glm::vec3(3.0f, 0.0f, 0.0f);
+      vertices2.push_back(vert);
+    }
+    Mesh spheroidCopy(vertices2, indices, textures, true);
+
     // Setup shaders
     std::string vertexShader = "res/shaders/vertexshader.vert";
     std::string fragmentShader = "res/shaders/fragmentshader.frag";
@@ -159,6 +167,7 @@ int main()
       prog.UniformMat4f("u_ModelMatrix", glm::rotate(glm::mat4(1.0f), rotAmount, rotAxis));
 
       spheroid.Draw(prog, cam);
+      spheroidCopy.Draw(prog, cam);
 
       time = Debug::CalculateFrameRate(time, numFrames);
 

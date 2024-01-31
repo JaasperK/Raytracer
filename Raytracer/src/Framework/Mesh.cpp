@@ -1,7 +1,30 @@
 #include "Mesh.h"
 
 Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<GLuint> &indices, std::vector<Texture> &textures)
-	: m_Vertices(vertices), m_Indices(indices), m_Textures(textures)
+	: m_Vertices(vertices), m_Indices(indices), m_Textures(textures), m_IsLightSource(false)
+{
+	m_VA.Bind();
+
+	VertexBuffer vb(vertices);
+	vb.Bind();
+
+	IndexBuffer ib(indices);
+	ib.Bind();
+
+	BufferLayout layout;          // See VertexBuffer::Vertex
+	layout.Push<float>(3, false); // vertex position
+	layout.Push<float>(3, false); // vertex normal
+	layout.Push<float>(3, false); // vertex color
+	layout.Push<float>(2, false); // vertex texUV
+
+	m_VA.LinkAttrib(vb, layout);
+
+	m_VA.Unbind();
+	vb.Unbind();
+}
+
+Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures, bool isLightSource)
+	: m_Vertices(vertices), m_Indices(indices), m_Textures(textures), m_IsLightSource(isLightSource)
 {
 	m_VA.Bind();
 
@@ -41,6 +64,8 @@ void Mesh::Draw(Shader &prog, Camera &cam) const
 	glm::vec3 camPos = cam.GetPosition();
 	prog.Uniform3f("u_CamPos", camPos.x, camPos.y, camPos.z);
 	prog.UniformMat4f("u_CameraMatrix", cam.GetCameraMatrix());
+
+	prog.Uniform1i("u_IsLightSource", m_IsLightSource);
 
 	glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, 0);
 }
