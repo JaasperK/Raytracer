@@ -5,12 +5,18 @@ Jasper Lennart Köhn (623385) <br>
 Max Thomas Reinstadler (622083) <br>
 Senol Schulz (624986)
 
+## TODO
++ Implement Light Sources
++ Build Scene
++ Save Scenes
++ Raytrace
+
 ## Dependencies
 Dieser Raytracer entsteht im Rahmen des Programmierpraktikums des Moduls Computergraphik und wurde unter Windows 10 und 11 mit Visual Studio 2022 und x86 Architektur entwickelt.
 Dabei haben wir *GLFW* und *GLEW* verwendet. Die benötigten Datein sind im *Dependencies*-Folder enthalten und müssen nur noch richtig in das Projekt eingebunden werden (siehe [Setup](#Setup)).
 
 ## Setup
-Öffnen Sie die *Solution Properties* und folgen Sie den Anweisungen:
+Öffnen Sie die *Solution Properties* und stellen Sie sicher, dass alle Felder wie beschrieben gesetzt sind:
 
 (**C/C++ - General**) Setzen Sie *Additional Include Directories*:
 - src\vendor
