@@ -14,6 +14,7 @@
 //Framework includes
 #include <Debug.h>
 #include <Mesh.h>
+#include <Scene.h>
 
 constexpr int WINDOW_WIDTH = 1000;
 constexpr int WINDOW_HEIGHT = 1000;
@@ -138,7 +139,13 @@ int main()
       vert.position += glm::vec3(3.0f, 0.0f, 0.0f);
       vertices2.push_back(vert);
     }
-    Mesh spheroidCopy(vertices2, indices, textures, true);
+    Mesh spheroidLight(vertices2, indices, textures, true);
+    
+    //Scene sc;
+    
+    // Uncommenting the two lines below results in error. Idk why
+    // sc.PushMesh(spheroid);
+    // sc.PushMesh(spheroidCopy);
 
     // Setup shaders
     std::string vertexShader = "res/shaders/vertexshader.vert";
@@ -167,7 +174,7 @@ int main()
       prog.UniformMat4f("u_ModelMatrix", glm::rotate(glm::mat4(1.0f), rotAmount, rotAxis));
 
       spheroid.Draw(prog, cam);
-      spheroidCopy.Draw(prog, cam);
+      spheroidLight.Draw(prog, cam);
 
       time = Debug::CalculateFrameRate(time, numFrames);
 
