@@ -137,7 +137,7 @@ int main()
     std::string fragmentShader = "res/shaders/fragmentshader.frag";
     Shader prog(vertexShader, fragmentShader);
     prog.Activate();
-    prog.Uniform1f("u_AmbLight", 0.1f);
+    prog.Uniform1f("u_AmbLight", 0.3f);
 
     Camera cam(WINDOW_WIDTH, WINDOW_HEIGHT, glm::vec3(0.0f, 0.0f, 5.0f));
 
