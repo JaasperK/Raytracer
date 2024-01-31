@@ -60,7 +60,7 @@ std::vector<Uniform> Shader::GetActiveUniforms()
   GLchar name[256];
   GLint size;
   GLenum type;
-  for (size_t i = 0; i < num; i++)
+  for (int i = 0; i < num; i++)
   {
     glGetActiveUniform(m_progID, i, 256, nullptr, &size, &type, name);
     uniforms.push_back(Uniform{ name, size, type });
