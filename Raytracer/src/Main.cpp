@@ -143,7 +143,7 @@ int main()
 
     // Init rotation params
     float rotAmount = 0.0f;
-    glm::vec3 rotAxis = glm::vec3(0.0f, 1.0f, 0.0f);    
+    glm::vec3 rotAxis = glm::vec3(0.0f, 1.0f, 0.0f);
     
     // To measure FPS 
     double time = glfwGetTime();
