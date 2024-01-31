@@ -10,7 +10,7 @@ Dieser Raytracer entsteht im Rahmen des Programmierpraktikums des Moduls Compute
 Dabei haben wir *GLFW* und *GLEW* verwendet. Die benötigten Datein sind im *Dependencies*-Folder enthalten und müssen nur noch richtig in das Projekt eingebunden werden (siehe [Setup](#Setup)).
 
 ## Setup
-Öffnen Sie die *Solution Properties* und folgen Sie den Anweisungen:
+Öffnen Sie die *Solution Properties* und stellen Sie sicher, dass alle Felder wie beschrieben gesetzt sind:
 
 (**C/C++ - General**) Setzen Sie *Additional Include Directories*:
 - src\vendor
