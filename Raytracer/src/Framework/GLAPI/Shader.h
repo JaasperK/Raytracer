@@ -7,6 +7,7 @@
 #include <sstream>
 #include <string>
 #include <array>
+#include <vector>
 
 #include <GLEW/glew.h>
 #include <glm/glm.hpp>
@@ -17,6 +18,12 @@ struct ShaderProgramSource
 	std::string fragmentSource;
 };
 
+struct Uniform  // only for debugging
+{
+	GLchar* name;
+	GLint size;
+	GLenum type;
+};
 
 class Shader
 {
@@ -32,6 +39,8 @@ public:
 	void Uniform3f(const std::string& name, GLfloat v0, GLfloat v1, GLfloat v2) const;
 	void Uniform4f(const std::string& name, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3) const;
 	void UniformMat4f(const std::string& name, const glm::mat4& matrix) const;
+
+	std::vector<Uniform> GetActiveUniforms();
 
 private:
 	ShaderProgramSource readShaderFile(const std::array<std::string, 2> filePaths) const;

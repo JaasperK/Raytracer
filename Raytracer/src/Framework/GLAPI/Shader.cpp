@@ -51,6 +51,23 @@ void Shader::UniformMat4f(const std::string& name, const glm::mat4& matrix) cons
   glUniformMatrix4fv(glGetUniformLocation(m_progID, name.c_str()), 1, GL_FALSE, &(matrix[0].x));  // same as glm::value_ptr(matrix)
 }
 
+std::vector<Uniform> Shader::GetActiveUniforms()
+{
+  int num = -1;
+  glGetProgramiv(m_progID, GL_ACTIVE_UNIFORMS, &num);
+
+  std::vector<Uniform> uniforms;
+  GLchar name[256];
+  GLint size;
+  GLenum type;
+  for (size_t i = 0; i < num; i++)
+  {
+    glGetActiveUniform(m_progID, i, 256, nullptr, &size, &type, name);
+    uniforms.push_back(Uniform{ name, size, type });
+  }
+  return uniforms;
+}
+
 /////////////////////////
 /// Private functions ///
 /////////////////////////

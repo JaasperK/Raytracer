@@ -9,6 +9,8 @@
 #include <iostream>
 #include <vector>
 
+#include <Shader.h>
+
 class Debug
 {
 public:
@@ -19,6 +21,7 @@ public:
 	
 	static void GLAPIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam);
 
+	static void PrintUniforms(Shader& prog);
 	static void PrintVertices(GLfloat* arr, int size);
 	static void PrintVec3(glm::vec3 v);
 	static void PrintUV(glm::vec2 v);

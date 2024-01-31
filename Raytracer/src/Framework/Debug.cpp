@@ -13,6 +13,15 @@ double Debug::CalculateFrameRate(double lastTime, int& numFrames)
   return lastTime;
 }
 
+void Debug::PrintUniforms(Shader& prog)
+{
+  std::vector<Uniform> uniforms = prog.GetActiveUniforms();
+  for (auto& u : uniforms)
+  {
+    std::cout << "Name: " << u.name << ", Size: " << u.size << ", Type: " << u.type << std::endl;
+  }
+}
+
 void Debug::PrintVertices(GLfloat* arr, int size)
 {
   std::cout << "[";
