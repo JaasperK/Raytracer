@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-Scene::Scene()
+Scene::Scene() : m_Meshes(std::vector<Mesh>())
 {
 }
 
@@ -8,15 +8,15 @@ Scene::~Scene()
 {
 }
 
-void Scene::Draw(Shader& prog, Camera& cam)
+void Scene::Draw(Shader& prog, Camera& cam) const
 {
-	for (auto& m : m_Meshes)
+	for (const auto& m : m_Meshes)
 	{
 		m.Draw(prog, cam);
 	}
 }
 
-void Scene::PushMesh(Mesh mesh)
+void Scene::PushMesh(const Mesh& mesh)
 {
 	m_Meshes.push_back(mesh);
 }

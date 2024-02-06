@@ -10,8 +10,8 @@ public:
 	Scene();
 	~Scene();
 
-	void Draw(Shader& prog, Camera& cam);
-	void PushMesh(Mesh mesh);
+	void Draw(Shader& prog, Camera& cam) const;
+	void PushMesh(const Mesh& mesh);
 
 private:
 	std::vector<Mesh> m_Meshes;
