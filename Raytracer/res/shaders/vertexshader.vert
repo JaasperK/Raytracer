@@ -2,6 +2,7 @@
 
 out vec2 v_TexCoord;
 out vec3 v_Normal;
+out vec3 v_Position;
 
 uniform mat4 u_CameraMatrix;
 uniform mat4 u_ModelMatrix;
@@ -16,5 +17,7 @@ layout (location = 3) in vec2 aTexCoord;
 void main() {
     v_Normal = aPos.xyz;
     v_TexCoord = aTexCoord;
-    gl_Position = u_CameraMatrix * u_ModelMatrix * vec4(aPos, 1.0);
+    vec4 pos = u_CameraMatrix * u_ModelMatrix * vec4(aPos, 1.0);
+    v_Position = pos.xyz;
+    gl_Position = pos;
 };

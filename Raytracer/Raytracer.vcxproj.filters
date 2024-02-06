@@ -42,9 +42,6 @@
     <ClCompile Include="src\Framework\Debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Framework\Ray.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Framework\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -924,9 +921,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Framework\GLAPI\BufferLayout.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Framework\Ray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Framework\Camera.h">

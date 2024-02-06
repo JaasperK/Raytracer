@@ -142,7 +142,6 @@
   <ItemGroup>
     <ClCompile Include="src\Framework\Camera.cpp" />
     <ClCompile Include="src\Framework\Mesh.cpp" />
-    <ClCompile Include="src\Framework\Ray.cpp" />
     <ClCompile Include="src\Framework\Scene.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Framework\Debug.cpp" />
@@ -302,7 +301,6 @@
     <ClInclude Include="src\Framework\Debug.h" />
     <ClInclude Include="src\Framework\GLAPI\IndexBuffer.h" />
     <ClInclude Include="src\Framework\Mesh.h" />
-    <ClInclude Include="src\Framework\Ray.h" />
     <ClInclude Include="src\Framework\GLAPI\Shader.h" />
     <ClInclude Include="src\Framework\GLAPI\Texture.h" />
     <ClInclude Include="src\Framework\Scene.h" />

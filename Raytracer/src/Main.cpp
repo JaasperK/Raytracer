@@ -20,7 +20,7 @@ constexpr int WINDOW_WIDTH = 1000;
 constexpr int WINDOW_HEIGHT = 1000;
 constexpr float PI = 3.1415927f;
 
-static void calculateSphereTexCoords(std::vector<Vertex> &verts)
+static void CalculateSphereTexCoords(std::vector<Vertex> &verts)
 {
   float u = 0;
   float v = 0;
@@ -38,7 +38,7 @@ static void calculateSphereTexCoords(std::vector<Vertex> &verts)
     verts[i].texUV.x = u;
     verts[i].texUV.y = v;
 
-    std::cout << "u: " << u << ", v: " << v << std::endl;
+    //std::cout << "u: " << u << ", v: " << v << std::endl;
   }
 }
 
@@ -129,9 +129,9 @@ int main()
     std::vector<Texture> textures;
     textures.push_back(earth);
 
-    calculateSphereTexCoords(vertices);
+    CalculateSphereTexCoords(vertices);
 
-    Mesh spheroid(vertices, indices, textures);
+    const Mesh spheroid(vertices, indices, textures);
 
     std::vector<Vertex> vertices2;
     for (auto& vert : vertices)
@@ -139,13 +139,13 @@ int main()
       vert.position += glm::vec3(3.0f, 0.0f, 0.0f);
       vertices2.push_back(vert);
     }
-    Mesh spheroidLight(vertices2, indices, textures, true);
+    const Mesh spheroidLight(vertices2, indices, textures, true);
     
+    // Uncommenting the two lines below results in error.
+    // Putting Meshes into std::vector crashes everything
     //Scene sc;
-    
-    // Uncommenting the two lines below results in error. Idk why
-    // sc.PushMesh(spheroid);
-    // sc.PushMesh(spheroidCopy);
+    //sc.PushMesh(spheroid);
+    //sc.PushMesh(spheroidLight);
 
     // Setup shaders
     std::string vertexShader = "res/shaders/vertexshader.vert";
@@ -153,6 +153,8 @@ int main()
     Shader prog(vertexShader, fragmentShader);
     prog.Activate();
     prog.Uniform1f("u_AmbLight", 0.3f);
+    prog.Uniform1i("u_RaysPerPixel", 1);
+    prog.Uniform1i("u_MaxBounces", 2);
 
     Camera cam(WINDOW_WIDTH, WINDOW_HEIGHT, glm::vec3(0.0f, 0.0f, 5.0f));
 
@@ -170,11 +172,13 @@ int main()
 
       cam.SetupMatrices(45.0f, 0.1f, 100.0f, prog);
       cam.Inputs(window);
+      prog.Uniform3f("u_CamPosition", cam.GetPosition().x, cam.GetPosition().y, cam.GetPosition().z);
       rotAmount += 0.02f;
       prog.UniformMat4f("u_ModelMatrix", glm::rotate(glm::mat4(1.0f), rotAmount, rotAxis));
 
       spheroid.Draw(prog, cam);
       spheroidLight.Draw(prog, cam);
+      //sc.Draw(prog, cam);
 
       time = Debug::CalculateFrameRate(time, numFrames);
 
