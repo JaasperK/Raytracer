@@ -21,12 +21,17 @@ public:
 	void Draw(Shader &prog, Camera &cam) const;
 
 private:
+	glm::vec4 CalculateSphereParams();
+
 	std::vector<Vertex> m_Vertices;
 	std::vector<GLuint> m_Indices;
 	std::vector<Texture> m_Textures;
 
 	VertexArray m_VA;
 	bool m_IsLightSource;
+	// Parameters for bounding sphere
+	glm::vec3 m_CenterPoint;
+	float m_Radius;
 };
 
 #endif // !MESH_H
