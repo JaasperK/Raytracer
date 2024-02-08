@@ -158,6 +158,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\fragmentshader.frag" />
+    <None Include="res\shaders\fragmenttest.frag" />
+    <None Include="res\shaders\vertextest.vert" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />

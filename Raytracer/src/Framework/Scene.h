@@ -10,7 +10,7 @@ public:
 	Scene();
 	~Scene();
 
-	void Draw(Shader& prog, Camera& cam) const;
+	void Draw(Shader& prog) const;
 	void PushMesh(const Mesh& mesh);
 
 private:

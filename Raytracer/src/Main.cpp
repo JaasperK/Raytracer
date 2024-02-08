@@ -83,78 +83,112 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     // Setup Buffers
-    const GLfloat x = 0.52573111212f;
-    const GLfloat z = 0.85065080835f;    
+    //const GLfloat x = 0.52573111212f;
+    //const GLfloat z = 0.85065080835f;    
 
-    std::vector<Vertex> vertices = {
-    //                      Positions      |            Normals          |            Colors         | Texture coordinates (calculated later)
-       Vertex{ glm::vec3(  -x, 0.0f,    z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
-       Vertex{ glm::vec3(   x, 0.0f,    z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
-       Vertex{ glm::vec3(  -x, 0.0f,   -z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
-       Vertex{ glm::vec3(   x, 0.0f,   -z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
-       Vertex{ glm::vec3(0.0f,    z,    x), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
-       Vertex{ glm::vec3(0.0f,    z,   -x), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
-       Vertex{ glm::vec3(0.0f,   -z,    x), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
-       Vertex{ glm::vec3(0.0f,   -z,   -x), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
-       Vertex{ glm::vec3(   z,    x, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
-       Vertex{ glm::vec3(  -z,    x, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
-       Vertex{ glm::vec3(   z,   -x, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
-       Vertex{ glm::vec3(  -z,   -x, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
-    };
+    //std::vector<Vertex> vertices = {
+    ////                      Positions      |            Normals          |            Colors         | Texture coordinates (calculated later)
+    //   Vertex{ glm::vec3(  -x, 0.0f,    z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+    //   Vertex{ glm::vec3(   x, 0.0f,    z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+    //   Vertex{ glm::vec3(  -x, 0.0f,   -z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+    //   Vertex{ glm::vec3(   x, 0.0f,   -z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+    //   Vertex{ glm::vec3(0.0f,    z,    x), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+    //   Vertex{ glm::vec3(0.0f,    z,   -x), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+    //   Vertex{ glm::vec3(0.0f,   -z,    x), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+    //   Vertex{ glm::vec3(0.0f,   -z,   -x), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+    //   Vertex{ glm::vec3(   z,    x, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+    //   Vertex{ glm::vec3(  -z,    x, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+    //   Vertex{ glm::vec3(   z,   -x, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+    //   Vertex{ glm::vec3(  -z,   -x, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+    //};
 
-    std::vector<GLuint> indices = {
-       0,  4,  1,
-       0,  9,  4,
-       9,  5,  4,
-       4,  5,  8,
-       4,  8,  1,
-       8, 10,  1,
-       8,  3, 10,
-       5,  3,  8,
-       5,  2,  3,
-       2,  7,  3,
-       7, 10,  3,
-       7,  6, 10,
-       7, 11,  6,
-      11,  0,  6,
-       0,  1,  6,
-       6,  1, 10,
-       9,  0, 11,
-       9, 11,  2,
-       9,  2,  5,
-       7,  2, 11
-    };
+    //std::vector<GLuint> indices = {
+    //   0,  4,  1,
+    //   0,  9,  4,
+    //   9,  5,  4,
+    //   4,  5,  8,
+    //   4,  8,  1,
+    //   8, 10,  1,
+    //   8,  3, 10,
+    //   5,  3,  8,
+    //   5,  2,  3,
+    //   2,  7,  3,
+    //   7, 10,  3,
+    //   7,  6, 10,
+    //   7, 11,  6,
+    //  11,  0,  6,
+    //   0,  1,  6,
+    //   6,  1, 10,
+    //   9,  0, 11,
+    //   9, 11,  2,
+    //   9,  2,  5,
+    //   7,  2, 11
+    //};
 
-    Texture earth("res/textures/earth.png");
-    std::vector<Texture> textures;
-    textures.push_back(earth);
+    //Texture earth("res/textures/earth.png");
+    //std::vector<Texture> textures;
+    //textures.push_back(earth);
 
-    CalculateSphereTexCoords(vertices);
+    //CalculateSphereTexCoords(vertices);
 
-    const Mesh spheroid(vertices, indices, textures);
+    //const Mesh spheroid(vertices, indices, textures);
 
-    std::vector<Vertex> vertices2;
-    for (auto& vert : vertices)
-    {
-      vert.position += glm::vec3(3.0f, 0.0f, 0.0f);
-      vertices2.push_back(vert);
-    }
-    const Mesh spheroidLight(vertices2, indices, textures, true);
+    //std::vector<Vertex> vertices2;
+    //for (auto& vert : vertices)
+    //{
+    //  vert.position += glm::vec3(3.0f, 0.0f, 0.0f);
+    //  vertices2.push_back(vert);
+    //}
+    //const Mesh spheroidLight(vertices2, indices, textures, true);
     
     // Uncommenting the two lines below results in error.
-    // Putting Meshes into std::vector crashes everything
+    // Putting Meshes into std::vector crashes everything for some reason
     //Scene sc;
     //sc.PushMesh(spheroid);
     //sc.PushMesh(spheroidLight);
 
+    // Setup meshes
+    std::vector<Vertex> verts;
+    {
+      using namespace glm;
+      verts.push_back(Vertex{ vec3(1.0, 1.0, 0.0), vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), vec2(0.0, 0.0) });
+      verts.push_back(Vertex{ vec3(-1.0, 1.0, 0.0), vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), vec2(0.0, 0.0) });
+      verts.push_back(Vertex{ vec3(1.0, -1.0, 0.0), vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), vec2(0.0, 0.0) });
+      verts.push_back(Vertex{ vec3(-1.0, -1.0, 0.0), vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), vec2(0.0, 0.0) });
+    }
+
+    std::vector<GLuint> indices = {
+      0, 1, 2,
+      3, 1, 2
+    };
+
+    std::vector<Texture> texs;
+
+    Mesh canvas(verts, indices, texs);
+
+
     // Setup shaders
-    std::string vertexShader = "res/shaders/vertexshader.vert";
+    /*std::string vertexShader = "res/shaders/vertexshader.vert";
     std::string fragmentShader = "res/shaders/fragmentshader.frag";
     Shader prog(vertexShader, fragmentShader);
     prog.Activate();
-    prog.Uniform1f("u_AmbLight", 0.3f);
     prog.Uniform1i("u_RaysPerPixel", 1);
-    prog.Uniform1i("u_MaxBounces", 2);
+    prog.Uniform1i("u_MaxBounces", 1);
+
+    prog.Uniform3f("u_LightSphereCenter", 0.0f, 0.0f, 0.0f);
+    prog.Uniform1f("u_LightSphereRadius", 1.0f);*/
+    
+    //Setup shader tests
+    std::string vertexShaderTest = "res/shaders/vertextest.vert";
+    std::string fragmentShaderTest = "res/shaders/fragmenttest.frag";
+    Shader testShader(vertexShaderTest, fragmentShaderTest);
+    testShader.Activate();
+    testShader.Uniform1i("u_RaysPerPixel", 1);
+    testShader.Uniform1i("u_MaxBounces", 1);
+
+    testShader.Uniform3f("u_LightSphereCenter", 0.0f, 0.0f, 0.0f);
+    testShader.Uniform1f("u_LightSphereRadius", 1.0f);
+    testShader.UniformMat4f("u_ModelMatrix", glm::mat4(1.0f));
 
     Camera cam(WINDOW_WIDTH, WINDOW_HEIGHT, glm::vec3(0.0f, 0.0f, 5.0f));
 
@@ -167,18 +201,18 @@ int main()
     int numFrames = 0;
     while (!glfwWindowShouldClose(window))
     {
-      glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+      //glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-      cam.SetupMatrices(45.0f, 0.1f, 100.0f, prog);
-      cam.Inputs(window);
-      prog.Uniform3f("u_CamPosition", cam.GetPosition().x, cam.GetPosition().y, cam.GetPosition().z);
-      rotAmount += 0.02f;
-      prog.UniformMat4f("u_ModelMatrix", glm::rotate(glm::mat4(1.0f), rotAmount, rotAxis));
+      //cam.SetupMatrices(45.0f, 0.1f, 100.0f, prog);
+      cam.SetupMatrices(45.0f, 0.1f, 100.0f, testShader);
+      cam.Inputs(window);      
 
-      spheroid.Draw(prog, cam);
-      spheroidLight.Draw(prog, cam);
-      //sc.Draw(prog, cam);
+      /*rotAmount += 0.02f;
+      prog.UniformMat4f("u_ModelMatrix", glm::rotate(glm::mat4(1.0f), rotAmount, rotAxis));*/
+      canvas.Draw(testShader);
+      /*spheroid.Draw(prog);
+      spheroidLight.Draw(prog);*/
 
       time = Debug::CalculateFrameRate(time, numFrames);
 

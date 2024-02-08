@@ -8,11 +8,11 @@ Scene::~Scene()
 {
 }
 
-void Scene::Draw(Shader& prog, Camera& cam) const
+void Scene::Draw(Shader& prog) const
 {
 	for (const auto& m : m_Meshes)
 	{
-		m.Draw(prog, cam);
+		m.Draw(prog);
 	}
 }
 

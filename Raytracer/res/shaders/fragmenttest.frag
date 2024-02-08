@@ -2,15 +2,11 @@
 
 out vec4 FragColor;
 
-// Raytracer settings
-uniform int u_RaysPerPixel;
-uniform int u_MaxBounces;
-// Mesh data
+
 // Camera data
 uniform vec3 u_CamPosition;
-// Bounding sphere
-uniform vec3 u_SphereCenter;
-uniform float u_SphereRadius;
+uniform mat4 u_CameraMatrix;
+
 // Light sources
 uniform vec3 u_LightSphereCenter;
 uniform float u_LightSphereRadius;
@@ -67,40 +63,17 @@ RayInfo raySphereIntersect(Ray ray, Sphere sphere) {
     return info;
 }
 
-RayInfo rayTriIntersect() {
-    RayInfo info;
-    //TODO
-
-    return info;
-}
-
-vec3 trace(Ray ray) {
-    vec3 incomingLight = vec3(0.0, 0.0, 0.0);
-    vec3 rayColor = vec3(1.0, 1.0, 1.0);
-
-    for (int bounceCount = 0; bounceCount <= u_MaxBounces; bounceCount++) {
-        // TODO
-    }
-    
-    return incomingLight;
-}
-
 void main() {
-    vec3 dir = vec3(gl_FragCoord.xy, 0.0) ;
+    vec3 focusPointLocal = vec3(gl_FragCoord.xy - 0.5, 1);
+	vec3 focusPoint = (inverse(u_CameraMatrix) * vec4(focusPointLocal, 1.0)).xyz;
     
-    Ray ray = Ray(u_CamPosition, normalize(dir - u_CamPosition));
+    Ray ray = Ray(u_CamPosition, normalize(focusPoint - u_CamPosition));
     Sphere sphere = Sphere(u_LightSphereCenter, u_LightSphereRadius);
     RayInfo info = raySphereIntersect(ray, sphere);
 
     if (info.ditHit) {
-        FragColor = vec3(1.0, 0.0, 0.0, 1.0);
+        FragColor = vec4(0.5, 0.0, 0.0, 1.0);
+    } else {
+        FragColor = vec4(0.07, 0.13, 0.17, 1.0);
     }
-
-    vec3 incomingLight = vec3(0.0, 0.0, 0.0);
-    for (int i = 0; i < u_RaysPerPixel; i++) {
-        incomingLight += trace(ray);
-    }
-
-    vec3 pixelColor = incomingLight / u_RaysPerPixel;
-    //FragColor = vec4(pixelColor, 1.0);
 };

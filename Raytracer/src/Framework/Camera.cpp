@@ -21,6 +21,7 @@ void Camera::SetupMatrices(float FOVdeg, float nearPlane, float farPlane, Shader
 	m_CameraMatrix = projection * view;
 	
 	prog.UniformMat4f("u_CameraMatrix", m_CameraMatrix);
+	prog.Uniform3f("u_CamPosition", m_Position.x, m_Position.y, m_Position.z);
 }
 
 void Camera::Inputs(GLFWwindow* window)
@@ -93,9 +94,7 @@ void Camera::Inputs(GLFWwindow* window)
 	}
 	else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE)
 	{
-		// Unhides cursor since camera is not looking around anymore
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-		// Makes sure the next time the camera looks around it doesn't jump
 		m_FirstClick = true;
 	}
 }

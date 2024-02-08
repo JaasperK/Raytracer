@@ -18,7 +18,7 @@ public:
 	Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures, bool isLightSource);
 	~Mesh();
 
-	void Draw(Shader &prog, Camera &cam) const;
+	void Draw(Shader& prog) const;
 
 private:
 	glm::vec4 CalculateSphereParams();

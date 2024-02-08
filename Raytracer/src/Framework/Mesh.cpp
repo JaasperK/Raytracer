@@ -2,7 +2,7 @@
 
 #include <glm/gtx/vec_swizzle.hpp>
 
-Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<GLuint> &indices, std::vector<Texture> &textures)
+Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures)
 	: Mesh(vertices, indices, textures, false)
 {
 }
@@ -13,7 +13,6 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vec
 	glm::vec4 params = CalculateSphereParams();
 	m_CenterPoint = glm::xyz(params);
 	m_Radius = params.w;
-
 
 	m_VA.Bind();
 
@@ -39,7 +38,9 @@ Mesh::~Mesh()
 {
 }
 
-void Mesh::Draw(Shader &prog, Camera &cam) const
+// If we want moving meshes, move CalculateSphereParams code here, s.t. sphereCenter moves along with rest of the mesh
+// for now we only handle non moving meshes
+void Mesh::Draw(Shader& prog) const
 {
 	prog.Activate();
 	m_VA.Bind();
@@ -50,11 +51,9 @@ void Mesh::Draw(Shader &prog, Camera &cam) const
 		prog.Uniform1i("u_Texture" + std::to_string(i), i);  // use sampler2D u_Texture0, u_Texture1,..., u_Texturei in frag shader
 	}
 
-	glm::vec3 camPos = cam.GetPosition();
-	prog.Uniform3f("u_CamPos", camPos.x, camPos.y, camPos.z);
-	prog.UniformMat4f("u_CameraMatrix", cam.GetCameraMatrix());
-
 	prog.Uniform1i("u_IsLightSource", m_IsLightSource);
+	prog.Uniform3f("u_SphereCenter", m_CenterPoint.x, m_CenterPoint.y, m_CenterPoint.z);
+	prog.Uniform1f("u_SphereRadius", m_Radius);
 
 	glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, 0);
 }
