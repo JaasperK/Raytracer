@@ -51,9 +51,9 @@ void Mesh::Draw(Shader& prog) const
 		prog.Uniform1i("u_Texture" + std::to_string(i), i);  // use sampler2D u_Texture0, u_Texture1,..., u_Texturei in frag shader
 	}
 
-	prog.Uniform1i("u_IsLightSource", m_IsLightSource);
+	/*prog.Uniform1i("u_IsLightSource", m_IsLightSource);
 	prog.Uniform3f("u_SphereCenter", m_CenterPoint.x, m_CenterPoint.y, m_CenterPoint.z);
-	prog.Uniform1f("u_SphereRadius", m_Radius);
+	prog.Uniform1f("u_SphereRadius", m_Radius);*/
 
 	glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, 0);
 }
