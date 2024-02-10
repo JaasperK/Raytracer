@@ -1,5 +1,5 @@
 # Raytracer
-Dieser Raytracer entsteht im Rahmen des Programmierpraktikums für das Moduls Computergraphik an der Humboldt Universität zu Berlin.
+Dieser Raytracer entsteht im Rahmen des Programmierpraktikums für das Modul Computergraphik an der Humboldt Universität zu Berlin.
 
 ## Gruppenmitglieder
 Jasper Lennart Köhn (623385) <br>
