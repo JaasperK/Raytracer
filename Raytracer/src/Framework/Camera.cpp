@@ -20,6 +20,7 @@ void Camera::SetupMatrices(float FOVdeg, float nearPlane, float farPlane, Shader
 
 	m_CameraMatrix = projection * view;
 	
+	prog.Uniform2f("u_Resolution", static_cast<float>(m_Width), static_cast<float>(m_Height));
 	prog.UniformMat4f("u_CameraMatrix", m_CameraMatrix);
 	prog.Uniform3f("u_CamPosition", m_Position.x, m_Position.y, m_Position.z);
 }
