@@ -11,8 +11,8 @@ Senol Schulz (624986)
 
 ## Dependencies
 Der Raytracer wurde unter Windows 10 und 11 mit Visual Studio 2022 und für die x86 Architektur entwickelt.
-Dabei haben wir *GLFW* und *GLEW* verwendet. Die benötigten Datein sind in den *Dependencies*- und *src\vendor*-Folder enthalten und müssen nur noch richtig in das Projekt eingebunden werden (siehe [Setup](#Setup)).
-Zusätzlich haben wir glm für Vector und Matrix Operationen und stbi_image zum Laden von Texturen verwendet.
+Dabei haben wir *GLFW* und *GLEW* verwendet. Zusätzlich haben wir glm für Vector und Matrix Operationen und stbi_image zum Laden von Texturen verwendet.
+Die benötigten Datein sind in den *Dependencies*- und *src\vendor*-Folder enthalten und müssen nur noch richtig in das Projekt eingebunden werden (siehe [Setup](#Setup)).
 
 ## Setup
 Öffnen Sie die *Solution Properties* und stellen Sie sicher, dass alle Felder wie beschrieben gesetzt sind:
