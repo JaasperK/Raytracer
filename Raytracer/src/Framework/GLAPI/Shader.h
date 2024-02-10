@@ -36,6 +36,7 @@ public:
 	void Uniform1i(const std::string& name, GLint v) const;
 	void Uniform1ui(const std::string& name, GLuint v) const;
 	void Uniform1f(const std::string& name, GLfloat v) const;
+	void Uniform2f(const std::string& name, GLfloat v0, GLfloat v1) const;
 	void Uniform3f(const std::string& name, GLfloat v0, GLfloat v1, GLfloat v2) const;
 	void Uniform4f(const std::string& name, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3) const;
 	void UniformMat4f(const std::string& name, const glm::mat4& matrix) const;
