@@ -13,6 +13,13 @@ double Debug::CalculateFrameRate(double lastTime, int& numFrames)
   return lastTime;
 }
 
+double Debug::TimeToRenderFrame(double lastTime)
+{
+  double currentTime = glfwGetTime();
+  std::cout << (currentTime - lastTime) * 1000 << "ms" << std::endl;
+  return currentTime;
+}
+
 void Debug::PrintUniforms(Shader& prog)
 {
   std::vector<Uniform> uniforms = prog.GetActiveUniforms();

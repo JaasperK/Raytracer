@@ -18,6 +18,8 @@ public:
 	~Debug(){}
 
 	static double CalculateFrameRate(double lastTime, int& numFrames);
+
+	static double TimeToRenderFrame(double lastTime);
 	
 	static void GLAPIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam);
 
