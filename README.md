@@ -10,7 +10,7 @@ Senol Schulz (624986)
 + Raytrace
 
 ## Dependencies
-Der Raytracer wurde unter Windows 10 und 11 mit Visual Studio 2022 und x86 Architektur entwickelt.
+Der Raytracer wurde unter Windows 10 und 11 mit Visual Studio 2022 und für die x86 Architektur entwickelt.
 Dabei haben wir *GLFW* und *GLEW* verwendet. Die benötigten Datein sind im *Dependencies*-Folder enthalten und müssen nur noch richtig in das Projekt eingebunden werden (siehe [Setup](#Setup)).
 
 ## Setup
