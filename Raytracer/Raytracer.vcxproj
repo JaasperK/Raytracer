@@ -142,7 +142,6 @@
   <ItemGroup>
     <ClCompile Include="src\Framework\Camera.cpp" />
     <ClCompile Include="src\Framework\Mesh.cpp" />
-    <ClCompile Include="src\Framework\Scene.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Framework\Debug.cpp" />
     <ClCompile Include="src\Framework\GLAPI\IndexBuffer.cpp" />
@@ -305,7 +304,6 @@
     <ClInclude Include="src\Framework\Mesh.h" />
     <ClInclude Include="src\Framework\GLAPI\Shader.h" />
     <ClInclude Include="src\Framework\GLAPI\Texture.h" />
-    <ClInclude Include="src\Framework\Scene.h" />
     <ClInclude Include="src\vendor\glm\common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_vector_relational.hpp" />
