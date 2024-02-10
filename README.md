@@ -1,4 +1,5 @@
 # Raytracer
+Dieser Raytracer entsteht im Rahmen des Programmierpraktikums für das Moduls Computergraphik an der Humboldt Universität zu Berlin.
 
 ## Gruppenmitglieder
 Jasper Lennart Köhn (623385) <br>
@@ -9,7 +10,7 @@ Senol Schulz (624986)
 + Raytrace
 
 ## Dependencies
-Dieser Raytracer entsteht im Rahmen des Programmierpraktikums des Moduls Computergraphik und wurde unter Windows 10 und 11 mit Visual Studio 2022 und x86 Architektur entwickelt.
+Der Raytracer wurde unter Windows 10 und 11 mit Visual Studio 2022 und x86 Architektur entwickelt.
 Dabei haben wir *GLFW* und *GLEW* verwendet. Die benötigten Datein sind im *Dependencies*-Folder enthalten und müssen nur noch richtig in das Projekt eingebunden werden (siehe [Setup](#Setup)).
 
 ## Setup
