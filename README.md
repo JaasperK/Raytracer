@@ -6,9 +6,6 @@ Max Thomas Reinstadler (622083) <br>
 Senol Schulz (624986)
 
 ## TODO
-+ Implement Light Sources
-+ Build Scene
-+ Save Scenes
 + Raytrace
 
 ## Dependencies
