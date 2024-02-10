@@ -1339,8 +1339,6 @@
     <None Include="src\vendor\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="res\shaders\fragmenttest.frag" />
-    <None Include="res\shaders\vertextest.vert" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\shaders\vertexshader.vert">
