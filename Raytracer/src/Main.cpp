@@ -13,12 +13,12 @@
 
 //Framework includes
 #include <Debug.h>
+#include <Shader.h>
+#include <Camera.h>
 #include <Mesh.h>
 
 constexpr int WINDOW_WIDTH = 1000;
 constexpr int WINDOW_HEIGHT = 1000;
-constexpr float PI = 3.1415927f;
-
 
 int main()
 {
@@ -92,20 +92,22 @@ int main()
     prog.Activate();
     prog.Uniform1i("u_RaysPerPixel", 1);
     prog.Uniform1i("u_MaxBounces", 1);
-
+    prog.Uniform3f("u_BackgroundColor", 0.07f, 0.13f, 0.17f);
     prog.UniformMat4f("u_ModelMatrix", glm::mat4(1.0f));
-    // Setup spheres 
-    prog.Uniform1i("u_NumSpheres", 3);
+
+    // Setup light
     prog.Uniform3f("u_LightSphereCenter", 0.2f, 0.0f, 0.0f);
     prog.Uniform1f("u_LightSphereRadius", 1.0f);
     prog.Uniform3f("u_LightSphereColor", 1.0f, 1.0f, 1.0f);
     
+    // Setup spheres 
+    prog.Uniform1i("u_NumSpheres", 3);
     prog.Uniform3f("u_Sphere1Center", 4.8f, 0.0f, 0.0f);
     prog.Uniform1f("u_Sphere1Radius", 2.0f);
     prog.Uniform3f("u_Sphere1Color", 0.0f, 0.0f, 1.0f);
     
     prog.Uniform3f("u_Sphere2Center", 4.0f, 0.5f, -3.0f);
-    prog.Uniform1f("u_Sphere2Radius", 1.0f);
+    prog.Uniform1f("u_Sphere2Radius", 2.0f);
     prog.Uniform3f("u_Sphere2Color", 0.75f, 0.0f, 0.0f);
     
 
@@ -120,13 +122,13 @@ int main()
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       cam.SetupMatrices(45.0f, 0.1f, 100.0f, prog);
-      cam.Inputs(window);      
+      cam.Inputs(window);
 
       canvas.Draw(prog);
       /*spheroid.Draw(prog);
       spheroidLight.Draw(prog);*/
 
-      time = Debug::TimeToRenderFrame(time);
+      time = Debug::CalculateFrameRate(time, numFrames);
 
       glfwSwapBuffers(window);
       glfwPollEvents();
