@@ -73,7 +73,7 @@ int main()
     // test
     for (auto& v : verts)
     {
-      v.position *= 5.0f;
+      v.position *= 10.0f;
     }
 
     std::vector<GLuint> indices = {
@@ -95,23 +95,32 @@ int main()
     prog.Uniform3f("u_BackgroundColor", 0.07f, 0.13f, 0.17f);
     prog.UniformMat4f("u_ModelMatrix", glm::mat4(1.0f));
 
-    // Setup light
-    prog.Uniform3f("u_LightSphereCenter", 0.2f, 0.0f, 0.0f);
-    prog.Uniform1f("u_LightSphereRadius", 1.0f);
-    prog.Uniform3f("u_LightSphereColor", 1.0f, 1.0f, 1.0f);
     
     // Setup spheres 
-    prog.Uniform1i("u_NumSpheres", 3);
-    prog.Uniform3f("u_Sphere1Center", 4.8f, 0.0f, 0.0f);
-    prog.Uniform1f("u_Sphere1Radius", 2.0f);
-    prog.Uniform3f("u_Sphere1Color", 0.0f, 0.0f, 1.0f);
+    prog.Uniform1i("u_NumSpheres", 5);
+    // Setup light
+    prog.Uniform3f("u_LightSphereCenter", -6.0f, 4.0f, 1.0f);
+    prog.Uniform1f("u_LightSphereRadius", 2.0f);
+    prog.Uniform3f("u_LightSphereColor", 1.0f, 1.0f, 1.0f);
     
-    prog.Uniform3f("u_Sphere2Center", 4.0f, 0.5f, -3.0f);
-    prog.Uniform1f("u_Sphere2Radius", 2.0f);
-    prog.Uniform3f("u_Sphere2Color", 0.75f, 0.0f, 0.0f);
+    prog.Uniform3f("u_Sphere1Center", 4.8f, 6.0f, 0.0f);
+    prog.Uniform1f("u_Sphere1Radius", 3.0f);
+    prog.Uniform3f("u_Sphere1Color", 0.0f, 0.0f, 0.75f);  // blue
+    
+    prog.Uniform3f("u_Sphere2Center", 4.0f, -1.5f, 0.0f);
+    prog.Uniform1f("u_Sphere2Radius", 1.5f);
+    prog.Uniform3f("u_Sphere2Color", 0.75f, 0.0f, 0.0f);  // red
+
+    prog.Uniform3f("u_Sphere3Center", 4.0f, 0.5f, -10.0f);
+    prog.Uniform1f("u_Sphere3Radius", 6.0f);
+    prog.Uniform3f("u_Sphere3Color", 0.5f, 0.2f, 0.35f);  // pink-ish
+
+    prog.Uniform3f("u_Sphere4Center", 4.0f, -52.5f, 0.0f);
+    prog.Uniform1f("u_Sphere4Radius", 50.0f);
+    prog.Uniform3f("u_Sphere4Color", 0.25f, 0.75f, 0.05f);  // green
     
 
-    Camera cam(WINDOW_WIDTH, WINDOW_HEIGHT, glm::vec3(0.0f, 0.0f, 5.0f));
+    Camera cam(WINDOW_WIDTH, WINDOW_HEIGHT, glm::vec3(0.0f, 0.0f, 10.0f));
 
     // To measure FPS 
     double time = glfwGetTime();

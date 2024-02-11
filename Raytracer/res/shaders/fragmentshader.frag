@@ -11,6 +11,8 @@ uniform vec3 u_CamPosition;
 uniform mat4 u_CameraMatrix;
 uniform vec2 u_Resolution;
 // Spheres
+uniform int u_NumSpheres;
+
 uniform vec3 u_LightSphereCenter;
 uniform float u_LightSphereRadius;
 uniform vec3 u_LightSphereColor;
@@ -23,8 +25,13 @@ uniform vec3 u_Sphere2Center;
 uniform float u_Sphere2Radius;
 uniform vec3 u_Sphere2Color;
 
-uniform int u_NumSpheres;
+uniform vec3 u_Sphere3Center;
+uniform float u_Sphere3Radius;
+uniform vec3 u_Sphere3Color;
 
+uniform vec3 u_Sphere4Center;
+uniform float u_Sphere4Radius;
+uniform vec3 u_Sphere4Color;
 
 struct Ray {
     vec3 origin;
@@ -39,10 +46,12 @@ struct Sphere {
 };
 
 // Setup spheres
-Sphere spheres[3] = Sphere[3](
+Sphere spheres[5] = Sphere[5](
     Sphere(u_LightSphereCenter, u_LightSphereRadius, u_LightSphereColor, true),
     Sphere(u_Sphere1Center, u_Sphere1Radius, u_Sphere1Color, false),
-    Sphere(u_Sphere2Center, u_Sphere2Radius, u_Sphere2Color, false)
+    Sphere(u_Sphere2Center, u_Sphere2Radius, u_Sphere2Color, false),
+    Sphere(u_Sphere3Center, u_Sphere3Radius, u_Sphere3Color, false),
+    Sphere(u_Sphere4Center, u_Sphere4Radius, u_Sphere4Color, false)
     );
 
 Sphere lightsource = spheres[0];
@@ -142,9 +151,13 @@ void main() {
     vec3 dir = vec3(coord, -1.0);
     
     Ray ray = Ray(u_CamPosition, normalize(dir));
-    RayInfo info1 = raySphereIntersect(ray, spheres[0]);
-    RayInfo info2 = raySphereIntersect(ray, spheres[1]);
-    RayInfo info3 = raySphereIntersect(ray, spheres[2]);
+    RayInfo info0 = raySphereIntersect(ray, spheres[0]);
+    RayInfo info1 = raySphereIntersect(ray, spheres[1]);
+    RayInfo info2 = raySphereIntersect(ray, spheres[2]);
+    RayInfo info3 = raySphereIntersect(ray, spheres[3]);
+    RayInfo info4 = raySphereIntersect(ray, spheres[4]);
+
+    RayInfo inf[] = { info0, info1, info2, info3, info4 };
 
     //vec3 incomingLight = vec3(0.0, 0.0, 0.0);
     //for (int i = 0; i < u_RaysPerPixel; i++) {
@@ -154,11 +167,14 @@ void main() {
     //vec3 pixelColor = incomingLight / u_RaysPerPixel;
     //FragColor = vec4(pixelColor, 1.0);
 
-    if (!info1.didHit && !info2.didHit && !info3.didHit) {
+    if (!info0.didHit && !info1.didHit && !info2.didHit && !info3.didHit && !info4.didHit) {
         FragColor = vec4(u_BackgroundColor, 1.0);
-    } else if (info1.didHit) {
-        FragColor = vec4(info1.color, 1.0);
-    } else if (info2.didHit) {
-        FragColor = vec4(info2.color, 1.0);
-    }
+    } else {
+        for (int i = 0; i < u_NumSpheres; i++) {
+            if (inf[i].didHit) {
+                FragColor = vec4(inf[i].color, 1.0);
+                break;
+            }
+        }  
+    } 
 };
