@@ -66,12 +66,12 @@ struct RayInfo {
 };
 
 RayInfo raySphereIntersect(Ray ray, Sphere sphere) {
-    RayInfo info = RayInfo(false, false, 0.0, vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0));
-    vec3 offsetRayOrigin = ray.origin - sphere.center;
+    RayInfo info = RayInfo(false, false, 0.0, vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), vec3(1.0, 1.0, 1.0));
+    vec3 raySphereOffset = ray.origin - sphere.center;
 
     float a = dot(ray.direction, ray.direction);
-    float b = 2 * dot(offsetRayOrigin, ray.direction);
-    float c = dot(offsetRayOrigin, offsetRayOrigin) - sphere.radius * sphere.radius;
+    float b = 2 * dot(raySphereOffset, ray.direction);
+    float c = dot(raySphereOffset, raySphereOffset) - sphere.radius * sphere.radius;
 
     float discriminant = b * b - 4 * a * c;
 
@@ -91,11 +91,11 @@ RayInfo raySphereIntersect(Ray ray, Sphere sphere) {
     }
 
     return info;
-}
+};
 
 // Test ray against all spheres in the scene
 RayInfo closestRayCollision(Ray ray) {
-    RayInfo closest = RayInfo(false, false, 0.0, vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0));
+    RayInfo closest = RayInfo(false, false, 10000000.0, vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), vec3(1.0, 1.0, 1.0));
 
     for (int i = 0; i < u_NumSpheres; i++) {
         RayInfo temp = raySphereIntersect(ray, spheres[i]);
@@ -105,44 +105,50 @@ RayInfo closestRayCollision(Ray ray) {
     }
 
     return closest;
-}
+};
+
+//struct RayInfo {
+//    bool didHit;
+//    bool hitLight;
+//    float dist;
+//    vec3 point;
+//    vec3 normal;
+//    vec3 color;
+//};
+
+// Raytracing:
+// 1. Find closest intersection of ray.
+//    1.1. if (!didHit) return backgrcolor
+// 2. calculate ray color
+// 3. calculate ray to light
+//    3.1 if (!didHit) return black
+//    3.2 else return ray color
 
 
 vec3 trace(Ray ray) {
-    vec3 incomingLight = vec3(0.0, 0.0, 0.0);
+    RayInfo info = closestRayCollision(ray);
 
-    for (int bounceCount = 0; bounceCount < u_MaxBounces; bounceCount++) {
-        RayInfo info = closestRayCollision(ray);
-        
-        if (info.hitLight && bounceCount == 1) {
-            return vec3(1,1,1);
-        } else if (!info.didHit && bounceCount == 1) {
-            return u_BackgroundColor;
-        } else if (!info.didHit) {
-            return incomingLight;
+    if (!info.didHit) {
+        if (info.hitLight) {
+            return info.color;
         }
-
-        
-        float intensity = dot(ray.direction, -info.normal);
-        incomingLight += max(intensity, 0) * info.color;
-
-        ray.origin = info.point;
-        if (bounceCount == u_MaxBounces - 1) {
-            ray.direction = normalize(lightsource.center - info.point);
-        } else {
-            ray.direction = reflect(ray.direction, info.normal);  // specular reflection
-        }
-
+        return u_BackgroundColor;
     }
 
-    // calculate last bounce
-    RayInfo info = closestRayCollision(ray);
+    float intensity = dot(-ray.direction, info.normal);
+    vec3 color = intensity * info.color;
+    
+    ray.origin = info.point;
+    ray.direction = normalize(lightsource.center - info.point);
+
+    info = closestRayCollision(ray);
+
     if (!info.hitLight) {
         return vec3(0.0, 0.0, 0.0);
-    } else {
-        return incomingLight;
     }
-}
+
+    return color;
+};
 
 void main() {
     // coord: [-1; 1]
@@ -151,30 +157,26 @@ void main() {
     vec3 dir = vec3(coord, -1.0);
     
     Ray ray = Ray(u_CamPosition, normalize(dir));
-    RayInfo info0 = raySphereIntersect(ray, spheres[0]);
-    RayInfo info1 = raySphereIntersect(ray, spheres[1]);
-    RayInfo info2 = raySphereIntersect(ray, spheres[2]);
-    RayInfo info3 = raySphereIntersect(ray, spheres[3]);
-    RayInfo info4 = raySphereIntersect(ray, spheres[4]);
+    
+    vec3 pixelColor = trace(ray);
+    FragColor = vec4(pixelColor, 1.0);
 
-    RayInfo inf[] = { info0, info1, info2, info3, info4 };
-
-    //vec3 incomingLight = vec3(0.0, 0.0, 0.0);
-    //for (int i = 0; i < u_RaysPerPixel; i++) {
-    //    incomingLight += trace(ray);
-    //}
+    //RayInfo info0 = raySphereIntersect(ray, spheres[0]);
+    //RayInfo info1 = raySphereIntersect(ray, spheres[1]);
+    //RayInfo info2 = raySphereIntersect(ray, spheres[2]);
+    //RayInfo info3 = raySphereIntersect(ray, spheres[3]);
+    //RayInfo info4 = raySphereIntersect(ray, spheres[4]);
     //
-    //vec3 pixelColor = incomingLight / u_RaysPerPixel;
-    //FragColor = vec4(pixelColor, 1.0);
-
-    if (!info0.didHit && !info1.didHit && !info2.didHit && !info3.didHit && !info4.didHit) {
-        FragColor = vec4(u_BackgroundColor, 1.0);
-    } else {
-        for (int i = 0; i < u_NumSpheres; i++) {
-            if (inf[i].didHit) {
-                FragColor = vec4(inf[i].color, 1.0);
-                break;
-            }
-        }  
-    } 
+    //RayInfo inf[] = { info0, info1, info2, info3, info4 };
+    //
+    //if (!info0.didHit && !info1.didHit && !info2.didHit && !info3.didHit && !info4.didHit) {
+    //    FragColor = vec4(u_BackgroundColor, 1.0);
+    //} else {
+    //    for (int i = 0; i < u_NumSpheres; i++) {
+    //        if (inf[i].didHit) {
+    //            FragColor = vec4(inf[i].color, 1.0);
+    //            break;
+    //        }
+    //    }  
+    //} 
 };
