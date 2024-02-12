@@ -5,6 +5,7 @@
 #include <GLEW/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <glm/gtx/vec_swizzle.hpp>
 
 #include <iostream>
 #include <vector>
@@ -23,6 +24,7 @@ public:
 	
 	static void GLAPIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam);
 
+	static void PrintCamMat(const glm::mat4& mat);
 	static void PrintUniforms(Shader& prog);
 	static void PrintVertices(GLfloat* arr, int size);
 	static void PrintVec3(glm::vec3 v);

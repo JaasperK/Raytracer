@@ -20,6 +20,18 @@ double Debug::TimeToRenderFrame(double lastTime)
   return currentTime;
 }
 
+void Debug::PrintCamMat(const glm::mat4& mat)
+{
+  for (size_t i = 0; i < 4; i++) {
+    for (size_t j = 0; j < 4; j++)
+    {
+      std::cout << mat[j][i] << ", ";
+    }
+    std::cout << std::endl;
+  }
+  std::cout << "------------------------" << std::endl;
+}
+
 void Debug::PrintUniforms(Shader& prog)
 {
   std::vector<Uniform> uniforms = prog.GetActiveUniforms();
