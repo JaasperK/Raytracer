@@ -53,7 +53,7 @@ struct Sphere {
 
 // Setup spheres
 Sphere spheres[5] = Sphere[5](
-    Sphere(u_LightSphereCenter, u_LightSphereRadius, u_LightSphereColor, vec3(1, 1, 0)),
+    Sphere(u_LightSphereCenter, u_LightSphereRadius, u_LightSphereColor, vec3(1, 1, 1)),
     Sphere(u_Sphere1Center, u_Sphere1Radius, u_Sphere1Color, vec3(0, 0, 0)),
     Sphere(u_Sphere2Center, u_Sphere2Radius, u_Sphere2Color, vec3(0, 0, 0)),
     Sphere(u_Sphere3Center, u_Sphere3Radius, u_Sphere3Color, vec3(0, 0, 0)),
@@ -157,33 +157,39 @@ RayInfo closestRayCollision(Ray ray) {
 };
 
 
-vec3 trace(Ray ray) {
+vec3 trace(Ray ray, inout uint seed) {
     vec3 light = vec3(0, 0, 0);
     vec3 color = vec3(1, 1, 1);
 
     for (int bounceCount = 0; bounceCount <= u_MaxBounces; bounceCount++) {
         RayInfo info = closestRayCollision(ray);
-        if (!info.didHit) {
-            light += u_EnvLight * color;
-            break;
-        }
-
-        // Update ray
-        ray.origin = info.point;
-        ray.direction = normalize(reflect(ray.direction, info.normal));
-
-        // Update light
-        if (info.hitLight) {
-            light += info.emittedLight * color;
-        }
-        float intensity = max(0, dot(ray.direction, info.normal));
-        color *= intensity * info.color;
-
+        
         // Cast shadow ray
         RayInfo shadow = closestRayCollision(Ray(info.point, normalize(lightsource.center - info.point)));
         if (!shadow.hitLight) {
             return info.emittedLight;
         }
+
+        if (!info.didHit) {
+            light += u_EnvLight * color;
+            break;
+        }
+
+        // Update light
+        if (info.hitLight) {
+            light += info.emittedLight * color;
+            return light;
+        }
+
+        // Update ray
+        ray.origin = info.point;
+        vec3 specularDir = normalize(reflect(ray.direction, info.normal));
+        vec3 diffusionDir = RandomDirection(seed);
+        float intensity = max(0, dot(ray.direction, -info.normal));
+        ray.direction = mix(diffusionDir, specularDir, intensity);
+
+        color *= intensity * info.color;
+
     }
 
     return light;
@@ -191,7 +197,7 @@ vec3 trace(Ray ray) {
 
 void main() {
     vec3 pixelColor = vec3(0, 0, 0);
-    float strength = 0.025;
+    float strength = 0.002;
 
     // coord: [-1; 1]
     vec2 coord = 2 * (gl_FragCoord.xy / u_Resolution) - 1.0;
@@ -208,8 +214,8 @@ void main() {
     for (int i = 0; i < u_RaysPerPixel; i++) {
         vec2 offset = RandomPointInCircle(rngSeed) * strength;
         ray.origin = u_CamPosition + right * offset.x + up * offset.y;
-        pixelColor += trace(ray);
+        pixelColor += trace(ray, rngSeed);
     }
 
-    FragColor = vec4(pixelColor / u_RaysPerPixel, 1.0); // + texture(u_Tex, v_TexCoord)) / 2;
+    FragColor = vec4(pixelColor / u_RaysPerPixel, 1.0);
 };

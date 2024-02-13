@@ -12,8 +12,9 @@ Camera::~Camera()
 void Camera::SetupMatrices(float FOVdeg, float nearPlane, float farPlane, Shader& prog)
 {
 	glm::mat4 projection = glm::mat4(1.0f);
-	projection = glm::perspective(glm::radians(FOVdeg), static_cast<float>(m_Width / m_Height), nearPlane, farPlane);
-	//projection = glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, nearPlane, farPlane);
+	//projection = glm::perspective(glm::radians(FOVdeg), static_cast<float>(m_Width / m_Height), nearPlane, farPlane);
+	float border = 50.0f;
+	projection = glm::ortho(-border, border, -border, border, nearPlane, farPlane);
 
 	glm::mat4 view = glm::mat4(1.0f);
 	view = glm::lookAt(m_Position, m_Position + m_Direction, m_Normal);

@@ -98,7 +98,7 @@ int main()
     //prog.Uniform1i("u_Tex", 0);
     
     prog.Uniform1i("u_RaysPerPixel", 16);
-    prog.Uniform1i("u_MaxBounces", 2);
+    prog.Uniform1i("u_MaxBounces", 4);
     prog.Uniform3f("u_EnvLight", 0.5294117647f, 0.80784313725f, 0.92156862745f);  // sky color: #87CEEB
     prog.UniformMat4f("u_ModelMatrix", glm::mat4(1.0f));
 
@@ -108,7 +108,7 @@ int main()
     GLfloat ylight = 4.0f;
     prog.Uniform3f("u_LightSphereCenter", -6.0f, ylight, 1.0f);
     prog.Uniform1f("u_LightSphereRadius", 2.0f);
-    prog.Uniform3f("u_LightSphereColor", 1.0f, 1.0f, 0.0f);
+    prog.Uniform3f("u_LightSphereColor", 0.0f, 0.0f, 0.0f);  // doesn't matter, emittedLight from frag shader will be displayed
     
     prog.Uniform3f("u_Sphere1Center", 4.8f, 6.0f, 3.0f);
     prog.Uniform1f("u_Sphere1Radius", 3.0f);
@@ -120,7 +120,7 @@ int main()
 
     prog.Uniform3f("u_Sphere3Center", 0.0f, 0.5f, -5.0f);
     prog.Uniform1f("u_Sphere3Radius", 6.0f);
-    prog.Uniform3f("u_Sphere3Color", 0.5f, 0.2f, 0.35f);  // pink-ish
+    prog.Uniform3f("u_Sphere3Color", 0.75f, 0.52f, 0.75f);  // pink-ish
 
     prog.Uniform3f("u_Sphere4Center", 4.0f, -52.5f, 0.0f);
     prog.Uniform1f("u_Sphere4Radius", 50.0f);
@@ -159,7 +159,7 @@ int main()
 
       canvas.Draw(prog);
 
-      Debug::PrintCamMat(cam.GetCameraMatrix());
+      //Debug::PrintCamMat(cam.GetCameraMatrix());
       time = Debug::CalculateFrameRate(time, numFrames);
 
       glfwSwapBuffers(window);
