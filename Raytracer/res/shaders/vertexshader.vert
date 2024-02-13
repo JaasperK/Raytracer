@@ -14,7 +14,7 @@ layout (location = 2) in vec3 aColor;
 layout (location = 3) in vec2 aTexCoord;
 
 void main() {
-    vec4 pos = u_CameraMatrix * u_ModelMatrix * vec4(aPos, 1.0);
+    vec4 pos = vec4(aPos, 1.0);
     v_Position = pos.xyz;
     v_Normal = aNormal;
     v_Color = aColor;

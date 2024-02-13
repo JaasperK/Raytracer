@@ -10,8 +10,8 @@ uniform vec3 u_EnvLight;
 uniform sampler2D u_Tex;
 
 // Camera settings
-uniform vec3 u_CamPosition;
 uniform mat4 u_CameraMatrix;
+uniform vec3 u_CamPosition;
 uniform vec2 u_Resolution;
 
 // Sphere data
@@ -191,17 +191,18 @@ vec3 trace(Ray ray) {
 
 void main() {
     vec3 pixelColor = vec3(0, 0, 0);
-    float strength = 0.05;
+    float strength = 0.025;
 
     // coord: [-1; 1]
     vec2 coord = 2 * (gl_FragCoord.xy / u_Resolution) - 1.0;
+    vec3 rayDirection = mat3(u_CameraMatrix) * vec3(coord, 1.0);
     
     // cam is at (0,0,10), looking in dir (0,0,-1)
-    Ray ray = Ray(u_CamPosition, normalize(vec3(coord, -1.0)));
+    Ray ray = Ray(u_CamPosition, normalize(rayDirection));
 
     vec3 right = normalize(u_CameraMatrix[0].xyz);
     vec3 up = normalize(u_CameraMatrix[1].xyz);
-
+    
     uint rngSeed = uint(gl_FragCoord.x * gl_FragCoord.y + u_Frame * 975230);
 
     for (int i = 0; i < u_RaysPerPixel; i++) {
@@ -210,5 +211,5 @@ void main() {
         pixelColor += trace(ray);
     }
 
-    FragColor = (vec4(pixelColor / u_RaysPerPixel, 1.0) + texture(u_Tex, v_TexCoord)) / 2;
+    FragColor = vec4(pixelColor / u_RaysPerPixel, 1.0); // + texture(u_Tex, v_TexCoord)) / 2;
 };

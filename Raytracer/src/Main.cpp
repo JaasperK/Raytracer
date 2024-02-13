@@ -93,9 +93,9 @@ int main()
     std::string fragmentShader = "res/shaders/fragmentshader.frag";
     Shader prog(vertexShader, fragmentShader);
     prog.Activate();
-    // Bind texture
-    t.Bind(0);
-    prog.Uniform1i("u_Tex", 0);
+    //// Bind texture
+    //t.Bind(0);
+    //prog.Uniform1i("u_Tex", 0);
     
     prog.Uniform1i("u_RaysPerPixel", 16);
     prog.Uniform1i("u_MaxBounces", 2);
@@ -127,7 +127,7 @@ int main()
     prog.Uniform3f("u_Sphere4Color", 0.25f, 0.75f, 0.05f);  // green
     
 
-    Camera cam(WINDOW_WIDTH, WINDOW_HEIGHT, glm::vec3(0.0f, 0.0f, 10.0f));
+    Camera cam(WINDOW_WIDTH, WINDOW_HEIGHT, glm::vec3(0.0f, 0.0f, 50.0f));
 
     // To measure FPS 
     double time = glfwGetTime();
@@ -142,15 +142,15 @@ int main()
       frame += 1;
       prog.Uniform1i("u_Frame", frame);
 
-      //if (ylight < 0.0f)
-      //{
-      //  inc *= -1;
-      //}
-      //if (ylight > 10.0f)
-      //{
-      //  inc *= -1;
-      //}
-      //ylight += inc;
+      if (ylight < 0.0f)
+      {
+        inc *= -1;
+      }
+      if (ylight > 10.0f)
+      {
+        inc *= -1;
+      }
+      ylight += inc;
       prog.Uniform3f("u_LightSphereCenter", -6.0f, ylight, 1.0f);
       
 
@@ -159,7 +159,7 @@ int main()
 
       canvas.Draw(prog);
 
-
+      Debug::PrintCamMat(cam.GetCameraMatrix());
       time = Debug::CalculateFrameRate(time, numFrames);
 
       glfwSwapBuffers(window);
