@@ -64,9 +64,10 @@ int main()
     std::vector<Vertex> verts;
     {
       using namespace glm;
-      verts.push_back(Vertex{ vec3(1.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec2(0.0f, 0.0f) });
-      verts.push_back(Vertex{ vec3(-1.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec2(0.0f, 0.0f) });
-      verts.push_back(Vertex{ vec3(1.0f, -1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec2(0.0f, 0.0f) });
+      //              Vertex{ position, normal, color, texCoord }
+      verts.push_back(Vertex{ vec3(1.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec2(1.0f, 1.0f) });
+      verts.push_back(Vertex{ vec3(-1.0f, 1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec2(0.0f, 1.0f) });
+      verts.push_back(Vertex{ vec3(1.0f, -1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec2(1.0f, 0.0f) });
       verts.push_back(Vertex{ vec3(-1.0f, -1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec2(0.0f, 0.0f) });
     }
 
@@ -81,7 +82,9 @@ int main()
       3, 1, 2
     };
 
+    Texture t("res/textures/canvas.png");
     std::vector<Texture> texs;
+    texs.push_back(t);
 
     Mesh canvas(verts, indices, texs);
 
@@ -90,13 +93,15 @@ int main()
     std::string fragmentShader = "res/shaders/fragmentshader.frag";
     Shader prog(vertexShader, fragmentShader);
     prog.Activate();
-    prog.Uniform1i("u_RaysPerPixel", 32);
-    prog.Uniform1i("u_MaxBounces", 1);
-    prog.Uniform3f("u_BackgroundColor", 0.07f, 0.13f, 0.17f);
+    // Bind texture
+    t.Bind(0);
+    prog.Uniform1i("u_Tex", 0);
+    
+    prog.Uniform1i("u_RaysPerPixel", 16);
+    prog.Uniform1i("u_MaxBounces", 2);
     prog.Uniform3f("u_EnvLight", 0.5294117647f, 0.80784313725f, 0.92156862745f);  // sky color: #87CEEB
     prog.UniformMat4f("u_ModelMatrix", glm::mat4(1.0f));
 
-    
     // Setup spheres 
     prog.Uniform1i("u_NumSpheres", 5);
     // Setup light
@@ -132,20 +137,20 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
-      //glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+      glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       frame += 1;
       prog.Uniform1i("u_Frame", frame);
 
-      if (ylight < 0.0f)
-      {
-        inc *= -1;
-      }
-      if (ylight > 10.0f)
-      {
-        inc *= -1;
-      }
-      ylight += inc;
+      //if (ylight < 0.0f)
+      //{
+      //  inc *= -1;
+      //}
+      //if (ylight > 10.0f)
+      //{
+      //  inc *= -1;
+      //}
+      //ylight += inc;
       prog.Uniform3f("u_LightSphereCenter", -6.0f, ylight, 1.0f);
       
 
@@ -153,6 +158,7 @@ int main()
       cam.Inputs(window);
 
       canvas.Draw(prog);
+
 
       time = Debug::CalculateFrameRate(time, numFrames);
 

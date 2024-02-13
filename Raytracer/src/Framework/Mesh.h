@@ -8,6 +8,7 @@
 #include <VertexBuffer.h>
 #include <BufferLayout.h>
 #include <IndexBuffer.h>
+#include <FrameBuffer.h>
 #include <Camera.h>
 #include <Texture.h>
 
@@ -15,11 +16,11 @@ class Mesh
 {
 public:
 	Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures);
-	Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures, bool isLightSource);
 	~Mesh();
 
-	void Draw(Shader& prog) const;
+	void Draw(Shader& prog);
 
+	uint64_t m_FrameCount = 0;
 private:
 	glm::vec4 CalculateSphereParams();
 
@@ -28,7 +29,7 @@ private:
 	std::vector<Texture> m_Textures;
 
 	VertexArray m_VA;
-	bool m_IsLightSource;
+	//FrameBuffer m_FB;
 	// Parameters for bounding sphere
 	glm::vec3 m_CenterPoint;
 	float m_Radius;

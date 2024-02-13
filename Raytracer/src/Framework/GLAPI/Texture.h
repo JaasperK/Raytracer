@@ -20,9 +20,10 @@ public:
 
 	inline int GetWidth() const { return m_Width; }
 	inline int GetHeight() const { return m_Height; }
+	inline GLuint GetID() const { return m_ID; }
 
 private:
-	unsigned int m_ID;
+	GLuint m_ID;
 	std::string m_Filepath;
 	unsigned char* m_LocalBuffer;
 	int m_Width, m_Height, m_BitsPerPixel;

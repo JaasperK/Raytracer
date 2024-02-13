@@ -6,8 +6,8 @@ out vec4 FragColor;
 uniform int u_RaysPerPixel;
 uniform int u_MaxBounces;
 uniform int u_Frame;
-uniform vec3 u_BackgroundColor;
 uniform vec3 u_EnvLight;
+uniform sampler2D u_Tex;
 
 // Camera settings
 uniform vec3 u_CamPosition;
@@ -36,6 +36,8 @@ uniform vec3 u_Sphere3Color;
 uniform vec3 u_Sphere4Center;
 uniform float u_Sphere4Radius;
 uniform vec3 u_Sphere4Color;
+
+in vec2 v_TexCoord;
 
 struct Ray {
     vec3 origin;
@@ -71,45 +73,45 @@ struct RayInfo {
 };
 
 // PCG (permuted congruential generator). Thanks to:
-			// www.pcg-random.org and www.shadertoy.com/view/XlGcRh
-			uint NextRandom(inout uint state)
-			{
-				state = state * 747796405 + 2891336453;
-				uint result = ((state >> ((state >> 28) + 4)) ^ state) * 277803737;
-				result = (result >> 22) ^ result;
-				return result;
-			}
+// www.pcg-random.org and www.shadertoy.com/view/XlGcRh
+uint NextRandom(inout uint state)
+{
+	state = state * 747796405 + 2891336453;
+	uint result = ((state >> ((state >> 28) + 4)) ^ state) * 277803737;
+	result = (result >> 22) ^ result;
+	return result;
+}
 
-			float RandomValue(inout uint state)
-			{
-				return NextRandom(state) / 4294967295.0; // 2^32 - 1
-			}
+float RandomValue(inout uint state)
+{
+	return NextRandom(state) / 4294967295.0; // 2^32 - 1
+}
 
-			// Random value in normal distribution (with mean=0 and sd=1)
-			float RandomValueNormalDistribution(inout uint state)
-			{
-				// Thanks to https://stackoverflow.com/a/6178290
-				float theta = 2 * 3.1415926 * RandomValue(state);
-				float rho = sqrt(-2 * log(RandomValue(state)));
-				return rho * cos(theta);
-			}
+// Random value in normal distribution (with mean=0 and sd=1)
+float RandomValueNormalDistribution(inout uint state)
+{
+	// Thanks to https://stackoverflow.com/a/6178290
+	float theta = 2 * 3.1415926 * RandomValue(state);
+	float rho = sqrt(-2 * log(RandomValue(state)));
+	return rho * cos(theta);
+}
 
-			// Calculate a random direction
-			vec3 RandomDirection(inout uint state)
-			{
-				// Thanks to https://math.stackexchange.com/a/1585996
-				float x = RandomValueNormalDistribution(state);
-				float y = RandomValueNormalDistribution(state);
-				float z = RandomValueNormalDistribution(state);
-				return normalize(vec3(x, y, z));
-			}
+// Calculate a random direction
+vec3 RandomDirection(inout uint state)
+{
+	// Thanks to https://math.stackexchange.com/a/1585996
+	float x = RandomValueNormalDistribution(state);
+	float y = RandomValueNormalDistribution(state);
+	float z = RandomValueNormalDistribution(state);
+	return normalize(vec3(x, y, z));
+}
 
-			vec2 RandomPointInCircle(inout uint rngState)
-			{
-				float angle = RandomValue(rngState) * 2 * 3.14159;
-				vec2 pointOnCircle = vec2(cos(angle), sin(angle));
-				return pointOnCircle * sqrt(RandomValue(rngState));
-			}
+vec2 RandomPointInCircle(inout uint rngState)
+{
+	float angle = RandomValue(rngState) * 2 * 3.14159;
+	vec2 pointOnCircle = vec2(cos(angle), sin(angle));
+	return pointOnCircle * sqrt(RandomValue(rngState));
+}
 
 RayInfo raySphereIntersect(Ray ray, Sphere sphere) {
     RayInfo info = RayInfo(false, 10000000, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1), false, vec3(0, 0, 0));
@@ -126,7 +128,7 @@ RayInfo raySphereIntersect(Ray ray, Sphere sphere) {
         float dist = (-b - sqrt(discriminant)) / (2 * a);
 
         // ignore cases where ray hits behind the camera
-        if (dist >= 0) {
+        if (dist >= 0.0) {
             info.didHit = true;
             info.dist = dist;
             info.point = ray.origin + ray.direction * dist;
@@ -178,9 +180,9 @@ vec3 trace(Ray ray) {
         color *= intensity * info.color;
 
         // Cast shadow ray
-        RayInfo shadow = closestRayCollision(Ray(info.point, lightsource.center - info.point));
+        RayInfo shadow = closestRayCollision(Ray(info.point, normalize(lightsource.center - info.point)));
         if (!shadow.hitLight) {
-            return vec3(0, 0, 0);
+            return info.emittedLight;
         }
     }
 
@@ -200,7 +202,6 @@ void main() {
     vec3 right = normalize(u_CameraMatrix[0].xyz);
     vec3 up = normalize(u_CameraMatrix[1].xyz);
 
-    // rng stuff
     uint rngSeed = uint(gl_FragCoord.x * gl_FragCoord.y + u_Frame * 975230);
 
     for (int i = 0; i < u_RaysPerPixel; i++) {
@@ -209,5 +210,5 @@ void main() {
         pixelColor += trace(ray);
     }
 
-    FragColor = vec4(pixelColor / u_RaysPerPixel, 1.0);
+    FragColor = (vec4(pixelColor / u_RaysPerPixel, 1.0) + texture(u_Tex, v_TexCoord)) / 2;
 };
