@@ -5,7 +5,7 @@ Die interessanten Datein sind src/Main.cpp und res/shaders/fragmentshader.frag.
 
 Implementiert sind:
 - Raytracing für Kugeln
-- Mehrere Rays pro Pixel ```u_RaysPerPixel```
+- Mehrere Rays pro Pixel ```u_RaysPerPixel``` mit zufälligen Offsets in der Ray origin
 - Mehrere bounces ```u_MaxBounces```
 - Lighting model mit einer specular und einer diffuse Komponente
 - Shadow rays
