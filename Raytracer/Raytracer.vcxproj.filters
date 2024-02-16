@@ -1355,5 +1355,14 @@
     <Image Include="res\screenshots\bug.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\screenshots\noise.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\screenshots\res1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\screenshots\res2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

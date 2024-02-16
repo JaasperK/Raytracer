@@ -592,6 +592,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\screenshots\bug.png" />
+    <Image Include="res\screenshots\noise.png" />
+    <Image Include="res\screenshots\res1.png" />
+    <Image Include="res\screenshots\res2.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
