@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Raytracer/res/textures/stones.png
+/Raytracer/res/textures/earth.png
+/Raytracer/res/textures/canvas.png
