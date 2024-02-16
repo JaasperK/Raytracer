@@ -48,6 +48,9 @@
     <ClCompile Include="src\Framework\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Framework\GLAPI\FrameBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Framework\GLAPI\VertexBuffer.h">
@@ -926,6 +929,9 @@
     <ClInclude Include="src\Framework\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Framework\GLAPI\FrameBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\fragmentshader.frag">
@@ -1346,10 +1352,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\textures\stones.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\textures\earth.png">
+    <Image Include="res\screenshots\bug.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

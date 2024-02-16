@@ -131,6 +131,7 @@ int main()
       frame += 1;
       prog.Uniform1i("u_Frame", frame);
 
+      // Move light
       if (ylight < 0.0f || ylight > 10.0f)
       {
         inc *= -1;

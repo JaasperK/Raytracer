@@ -591,9 +591,7 @@
     <ClInclude Include="src\Framework\GLAPI\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\textures\canvas.png" />
-    <Image Include="res\textures\earth.png" />
-    <Image Include="res\textures\stones.png" />
+    <Image Include="res\screenshots\bug.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
