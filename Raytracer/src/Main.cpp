@@ -88,6 +88,7 @@ int main()
     
     prog.Uniform1i("u_RaysPerPixel", 32);
     prog.Uniform1i("u_MaxBounces", 5);
+    //prog.Uniform3f("u_EnvLight", 0.0f, 0.0f, 1.0f);
     prog.Uniform3f("u_EnvLight", 0.5294117647f, 0.80784313725f, 0.92156862745f);  // sky color: #87CEEB
 
     // Setup spheres 

@@ -163,7 +163,7 @@ vec3 trace(Ray ray, inout uint seed) {
         RayInfo info = closestRayCollision(ray);        
         if (!info.didHit) {
             light += u_EnvLight * color;
-            break;
+            return light;
         }
 
         // Cast shadow ray
@@ -181,16 +181,16 @@ vec3 trace(Ray ray, inout uint seed) {
 
         // Update ray
         ray.origin = info.point;
-        vec3 specularDir = normalize(reflect(ray.direction, info.normal));
-        vec3 diffuseDir = RandomDirection(seed);  // is normalized
-        if (dot(diffuseDir, info.normal) < 0) {  // if diffuseDir goes into the sphere
+        vec3 specularDir = reflect(ray.direction, info.normal);  // normalized since inputs are normalized
+        vec3 diffuseDir = RandomDirection(seed);                 // is normalized
+        if (dot(diffuseDir, info.normal) < 0) {                  // if diffuseDir goes into the sphere
             diffuseDir *= -1;
         }
+
         float intensity = max(0, dot(-ray.direction, info.normal));
         ray.direction = mix(diffuseDir, specularDir, intensity);
 
         color *= intensity * info.color;
-
     }
 
     return light;
