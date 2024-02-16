@@ -184,9 +184,9 @@ vec3 trace(Ray ray, inout uint seed) {
         // Update ray
         ray.origin = info.point;
         vec3 specularDir = normalize(reflect(ray.direction, info.normal));
-        vec3 diffusionDir = RandomDirection(seed);  // is normalized
+        vec3 diffuseDir = RandomDirection(seed);  // is normalized
         float intensity = max(0, dot(ray.direction, -info.normal));
-        ray.direction = mix(diffusionDir, specularDir, intensity);
+        ray.direction = mix(diffuseDir, specularDir, intensity);
 
         color *= intensity * info.color;
 
