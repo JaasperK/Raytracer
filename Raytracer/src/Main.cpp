@@ -5,16 +5,10 @@
 #include <GLFW/glfw3.h>
 
 #include <vector>
-
-// glm includes
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 //Framework includes
 #include <Debug.h>
-#include <Shader.h>
-#include <Camera.h>
 #include <Mesh.h>
 
 constexpr int WINDOW_WIDTH = 1000;
@@ -71,7 +65,7 @@ int main()
       verts.push_back(Vertex{ vec3(-1.0f, -1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec2(0.0f, 0.0f) });
     }
 
-    // test
+    // Scale Canvas
     for (auto& v : verts)
     {
       v.position *= 20.0f;
@@ -82,9 +76,7 @@ int main()
       3, 1, 2
     };
 
-    Texture t("res/textures/canvas.png");
     std::vector<Texture> texs;
-    texs.push_back(t);
 
     Mesh canvas(verts, indices, texs);
 
@@ -93,18 +85,14 @@ int main()
     std::string fragmentShader = "res/shaders/fragmentshader.frag";
     Shader prog(vertexShader, fragmentShader);
     prog.Activate();
-    //// Bind texture
-    //t.Bind(0);
-    //prog.Uniform1i("u_Tex", 0);
     
     prog.Uniform1i("u_RaysPerPixel", 16);
     prog.Uniform1i("u_MaxBounces", 4);
     prog.Uniform3f("u_EnvLight", 0.5294117647f, 0.80784313725f, 0.92156862745f);  // sky color: #87CEEB
-    prog.UniformMat4f("u_ModelMatrix", glm::mat4(1.0f));
 
     // Setup spheres 
     prog.Uniform1i("u_NumSpheres", 5);
-    // Setup light
+
     GLfloat ylight = 4.0f;
     prog.Uniform3f("u_LightSphereCenter", -6.0f, ylight, 1.0f);
     prog.Uniform1f("u_LightSphereRadius", 2.0f);
@@ -129,11 +117,12 @@ int main()
 
     Camera cam(WINDOW_WIDTH, WINDOW_HEIGHT, glm::vec3(0.0f, 0.0f, 50.0f));
 
+    float inc = 0.025f;
+    int frame = 0;
+
     // To measure FPS 
     double time = glfwGetTime();
     int numFrames = 0;
-    int frame = 0;
-    float inc = 0.025f;
 
     while (!glfwWindowShouldClose(window))
     {
@@ -142,24 +131,18 @@ int main()
       frame += 1;
       prog.Uniform1i("u_Frame", frame);
 
-      if (ylight < 0.0f)
-      {
-        inc *= -1;
-      }
-      if (ylight > 10.0f)
+      if (ylight < 0.0f || ylight > 10.0f)
       {
         inc *= -1;
       }
       ylight += inc;
-      prog.Uniform3f("u_LightSphereCenter", -6.0f, ylight, 1.0f);
-      
+      prog.Uniform3f("u_LightSphereCenter", -6.0f, ylight, 1.0f);      
 
       cam.SetupMatrices(45.0f, 0.1f, 100.0f, prog);
       cam.Inputs(window);
 
       canvas.Draw(prog);
 
-      //Debug::PrintCamMat(cam.GetCameraMatrix());
       time = Debug::CalculateFrameRate(time, numFrames);
 
       glfwSwapBuffers(window);

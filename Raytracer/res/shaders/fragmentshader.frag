@@ -7,7 +7,6 @@ uniform int u_RaysPerPixel;
 uniform int u_MaxBounces;
 uniform int u_Frame;
 uniform vec3 u_EnvLight;
-uniform sampler2D u_Tex;
 
 // Camera settings
 uniform mat4 u_CameraMatrix;
@@ -37,7 +36,6 @@ uniform vec3 u_Sphere4Center;
 uniform float u_Sphere4Radius;
 uniform vec3 u_Sphere4Color;
 
-in vec2 v_TexCoord;
 
 struct Ray {
     vec3 origin;
@@ -72,7 +70,7 @@ struct RayInfo {
     vec3 emittedLight;
 };
 
-// PCG (permuted congruential generator). Thanks to:
+// PCG (permuted congruential generator). From:
 // www.pcg-random.org and www.shadertoy.com/view/XlGcRh
 uint NextRandom(inout uint state)
 {
@@ -90,7 +88,7 @@ float RandomValue(inout uint state)
 // Random value in normal distribution (with mean=0 and sd=1)
 float RandomValueNormalDistribution(inout uint state)
 {
-	// Thanks to https://stackoverflow.com/a/6178290
+	// From: https://stackoverflow.com/a/6178290
 	float theta = 2 * 3.1415926 * RandomValue(state);
 	float rho = sqrt(-2 * log(RandomValue(state)));
 	return rho * cos(theta);
@@ -99,7 +97,7 @@ float RandomValueNormalDistribution(inout uint state)
 // Calculate a random direction
 vec3 RandomDirection(inout uint state)
 {
-	// Thanks to https://math.stackexchange.com/a/1585996
+	// From: https://math.stackexchange.com/a/1585996
 	float x = RandomValueNormalDistribution(state);
 	float y = RandomValueNormalDistribution(state);
 	float z = RandomValueNormalDistribution(state);
