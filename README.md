@@ -1,6 +1,17 @@
 # Raytracer
 Dieser Raytracer entsteht im Rahmen des Programmierpraktikums für das Modul Computergraphik an der Humboldt Universität zu Berlin. Zu Beginn der Übungsaufgaben haben wir mit der Programmierung eines Wrappers um die OpenGL-API begonnen und auch für diesen Raytracer verwendet. Daher gibt es Dateien die nicht im Projekt verwendet werden. Die interessanten Datein sind Raytracer/src/Main.cpp und Raytracer/res/shaders/fragmentshader.frag.
 
+## Inhalte
+- [Gruppenmitglieder](#Gruppenmitglieder)
+- [Features](#Features)
+- [Implementation](#Implementation)
+- [Ergebnisse/Screenshots](#Ergebnisse/Screenshots)
+- [Dependencies](#Dependencies)
+- [Quellen](#Quellen)
+- [Setup](#Setup)
+- [Ausführung](#Ausführung)
+
+  
 ## Gruppenmitglieder
 Jasper Lennart Köhn (623385) <br>
 Max Thomas Reinstadler (622083) <br>
