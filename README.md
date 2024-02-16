@@ -13,8 +13,31 @@ Senol Schulz (624986)
 - "Echtzeit" Raytracing für Kugeln mit
   - mehreren Rays pro Pixel ```u_RaysPerPixel```
   - mehreren bounces pro Ray ```u_MaxBounces```
-- Lichtberechnung durch die lineare Interpolation zwischen einer spekularen und einer diffusen Komponente anhand des Winkels zur Lichtquelle
+- Beleuchtungsberechnung durch die lineare Interpolation zwischen einer spekularen und einer zufälligen diffusen Komponente anhand des Winkels zwischen Ray direction und der Normale am Schnittpunkt von Ray und Kugel
 - Shadow rays für die Schattenberechnung
+
+## Implementation
+### Die C++ Seite
+Unser Raytracer ist vollständig im Fragment Shader implementiert. Daher benutzen wir zwei Dreiecke als Canvas, auf den wir die berechnete Pixelfarbe zeichnen. Beim Ausführen des Programms wird die main-Methode in Main.cpp aufgerufen. Nach der Initialisierung von glfw und glew werden die Vertexpositionen für den Canvas gesetzt. Zudem werden Camera und Shader initialisiert und geladen. Zuletzt setzen wir noch Uniforms, die wir später im Fragment Shader verwenden, und starten die Renderloop. 
+
+#### Die Kamera
+Wir verwenden eine Kamera mit orthographischer Projektion, weil wir beim Testen festgestellt haben, dass unser Programm so besser aussieht. In der Nähe vom Koordinatenursprung gibt es Probleme mit der Steuerung der Kamera. Da die Kamera aber nicht der Fokus unseres Projektes ist, haben wir das so belassen.
+
+### Die Shader
+#### main()
+Der Vertex Shader setzt nur die Position der Vertices des Canvas. Im Fragment Shader skalieren wir die ```gl_FragCoord``` so, dass x und y zwischen -1 und +1 liegen, um diese in Screen Koordinaten umzuwandeln. Anschließend berechnen wir mit der Rotationsmatrix aus der Kameramatrix die Richtung, in die wir den Ray aussenden. Aus der ```gl_FragCoord```  und der Framezahl wird ein Seed für unsere Zufallszahlen generiert. Für jeden Ray den wir pro Pixel aussenden wird ein ```vec2``` von Zufallszahlen erzeugt, um die wir die ray origin verschieben. Das führt dazu, dass zwei Rays, die wir für einen Pixel aussenden, verschiedene Laufbahnen haben und nicht zweimal den selben Pfad tracen. Am Ende addieren wir das Licht aller Rays nach der trace() Funktion und teilen das Ergebnis dann durch die Anzahl der Rays, um das Ergebnis in allen Komponenten wieder zwischen 0 und 1 zu skalieren. 
+
+#### trace()
+
+
+#### raySphereIntersect()
+Wir berechnen nur eine Schnittstelle von Ray und Kugel. Das führt dazu, dass Kugeln verschwinden, wenn wir die Kamera in einer Kugel platzieren. Das zusammen mit Floating Point Fehlern ist vermutlich auch der Grund dafür, dass unsere Schatten noch vereinzelt farbige Punkte haben. Wenn ein Punkt innerhalb einer Kugel liegt und wir den Shadow Ray casten, dann liegt der berechnete Schnittpunkt hinter der Ray origin. Also ist der Weg zum Licht nicht blockiert und der Pixel wird farbig eingezeichnet.
+
+
+## Dependencies
+Der Raytracer wurde unter Windows 10 und 11 mit Visual Studio 2022 und für die x86 Architektur entwickelt.
+Dabei haben wir *GLFW* und *GLEW* verwendet. Zusätzlich haben wir glm für Vector und Matrix Operationen und stb_image zum Laden von Texturen verwendet.
+Die benötigten Datein sind in den *Dependencies*- und *src\vendor*-Folder enthalten und müssen nur noch richtig in das Projekt eingebunden werden (siehe [Setup](#Setup)).
 
 ## Quellen
 Für die Erzeugung der Zufallszahlen für die Offsets der Ray origin und der Vektoren für die diffuse Reflexion:
@@ -23,12 +46,8 @@ Für die Erzeugung der Zufallszahlen für die Offsets der Ray origin und der Vek
 - https://stackoverflow.com/a/6178290
 - https://math.stackexchange.com/a/1585996
 
-
-
-## Dependencies
-Der Raytracer wurde unter Windows 10 und 11 mit Visual Studio 2022 und für die x86 Architektur entwickelt.
-Dabei haben wir *GLFW* und *GLEW* verwendet. Zusätzlich haben wir glm für Vector und Matrix Operationen und stb_image zum Laden von Texturen verwendet.
-Die benötigten Datein sind in den *Dependencies*- und *src\vendor*-Folder enthalten und müssen nur noch richtig in das Projekt eingebunden werden (siehe [Setup](#Setup)).
+Für die Kameramatrizen:
+- https://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices
 
 ## Setup
 Nach dem Öffnen der Solution sollte das Projekt direkt ausführbar sein, falls das nicht der Fall ist, stellen Sie sicher, dass Sie x86 verwenden und in den
