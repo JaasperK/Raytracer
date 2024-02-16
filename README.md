@@ -50,7 +50,7 @@ Der Vertex Shader setzt nur die Position der Vertices des Canvas. Im Fragment Sh
 6. Falls die Anzahl der maximalen Bounces ```u_MaxBounces``` noch nicht erreicht ist, gehe zu 1.
 
 #### raySphereIntersect()
-Wir berechnen nur eine Schnittstelle von Ray und Kugel. Das führt dazu, dass Kugeln verschwinden, wenn wir die Kamera in einer Kugel platzieren. Das zusammen mit Floating Point Fehlern ist vermutlich auch der Grund dafür, dass unsere Schatten noch vereinzelt farbige Punkte haben (siehe [Noise](#Noise)). Wenn ein Punkt innerhalb einer Kugel liegt und wir den Shadow Ray casten, dann liegt der berechnete Schnittpunkt hinter der Ray origin. Also ist der Weg zum Licht nicht blockiert und der Pixel wird farbig eingezeichnet.
+Wir berechnen nur eine Schnittstelle von Ray und Kugel. Das führt dazu, dass Kugeln verschwinden, wenn wir die Kamera in einer Kugel platzieren. Das zusammen mit Floating Point Fehlern ist vermutlich auch der Grund dafür, dass unsere Schatten noch viele farbige Punkte haben (siehe [Noise](#Noise)). Wenn ein Punkt innerhalb einer Kugel liegt und wir den Shadow Ray casten, dann liegt der berechnete Schnittpunkt hinter der Ray origin. Also ist der Weg zum Licht nicht blockiert und der Pixel wird farbig eingezeichnet.
 
 ## Ergebnisse/Screenshots
 ![Result1](Raytracer/res/screenshots/res1.png)
