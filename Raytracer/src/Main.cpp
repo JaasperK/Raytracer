@@ -1,5 +1,5 @@
-#pragma comment(linker, "/NODEFAULTLIB:MSVCRT")
-#pragma comment(linker, "/NODEFAULTLIB:LIBCMT")
+#pragma comment(linker, "/NODEFAULTLIB:MSVCRT")  // To build in release mode comment these lines
+#pragma comment(linker, "/NODEFAULTLIB:LIBCMT")  // To build in release mode comment these lines
 
 #include <GLEW/glew.h>
 #include <GLFW/glfw3.h>
@@ -86,8 +86,8 @@ int main()
     Shader prog(vertexShader, fragmentShader);
     prog.Activate();
     
-    prog.Uniform1i("u_RaysPerPixel", 16);
-    prog.Uniform1i("u_MaxBounces", 4);
+    prog.Uniform1i("u_RaysPerPixel", 32);
+    prog.Uniform1i("u_MaxBounces", 5);
     prog.Uniform3f("u_EnvLight", 0.5294117647f, 0.80784313725f, 0.92156862745f);  // sky color: #87CEEB
 
     // Setup spheres 

@@ -160,18 +160,18 @@ vec3 trace(Ray ray, inout uint seed) {
     vec3 color = vec3(1, 1, 1);
 
     for (int bounceCount = 0; bounceCount <= u_MaxBounces; bounceCount++) {
-        RayInfo info = closestRayCollision(ray);
-        
+        RayInfo info = closestRayCollision(ray);        
+        if (!info.didHit) {
+            light += u_EnvLight * color;
+            break;
+        }
+
         // Cast shadow ray
         RayInfo shadow = closestRayCollision(Ray(info.point, normalize(lightsource.center - info.point)));
         if (!shadow.hitLight) {
             return info.emittedLight;
         }
 
-        if (!info.didHit) {
-            light += u_EnvLight * color;
-            break;
-        }
 
         // Update light
         if (info.hitLight) {
