@@ -183,7 +183,10 @@ vec3 trace(Ray ray, inout uint seed) {
         ray.origin = info.point;
         vec3 specularDir = normalize(reflect(ray.direction, info.normal));
         vec3 diffuseDir = RandomDirection(seed);  // is normalized
-        float intensity = max(0, dot(ray.direction, -info.normal));
+        if (dot(diffuseDir, info.normal) < 0) {  // if diffuseDir goes into the sphere
+            diffuseDir *= -1;
+        }
+        float intensity = max(0, dot(-ray.direction, info.normal));
         ray.direction = mix(diffuseDir, specularDir, intensity);
 
         color *= intensity * info.color;
