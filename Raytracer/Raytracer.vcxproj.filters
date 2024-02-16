@@ -1364,5 +1364,8 @@
     <Image Include="res\screenshots\res2.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\screenshots\red_back.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
