@@ -84,7 +84,7 @@ Für die Kameramatrizen:
 
 ## Setup
 Nach dem Öffnen der Solution sollte das Projekt direkt ausführbar sein, falls das nicht der Fall ist, stellen Sie sicher, dass Sie x86 verwenden und in den
-*Solution Properties* die Folgenden Felder, wie beschrieben gesetzt sind:
+*Solution Properties* die folgenden Felder, wie beschrieben gesetzt sind:
 
 (**C/C++ - General**) Setzen Sie *Additional Include Directories*:
 - src\vendor
